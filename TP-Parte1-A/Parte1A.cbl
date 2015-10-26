@@ -116,6 +116,7 @@
            CLOSE TIPOSCLASE_FILE.
            CLOSE TIMES_FILE.
 
+
        MAIN-PROCEDURE.
       **
       * The main procedure of the program
