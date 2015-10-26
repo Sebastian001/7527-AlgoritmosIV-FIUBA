@@ -63,6 +63,59 @@
       *-----------------------
        PROCEDURE DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+       INICIALIZAR.
+           OPEN INPUT NOVTIMES1_FILE.
+           IF FS-NOVTIMES1 IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR NOVTIMES1 FS: " FS-NOVTIMES1
+               STOP RUN
+           END-IF.
+
+           OPEN INPUT NOVTIMES2_FILE.
+           IF FS-NOVTIMES2 IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR NOVTIMES2 FS: " FS-NOVTIMES2
+               STOP RUN
+           END-IF.
+
+           OPEN INPUT NOVTIMES3_FILE.
+           IF FS-NOVTIMES3 IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR NOVTIMES3 FS: " FS-NOVTIMES3
+               STOP RUN
+           END-IF.
+
+           OPEN INPUT PROFESORES_FILE.
+           IF FS-PROFESORES IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR PROFESORES FS: " FS-PROFESORES
+               STOP RUN
+           END-IF.
+
+           OPEN INPUT SUCURSALES_FILE.
+           IF FS-SUCURSALES IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR SUCURSALES FS: " FS-SUCURSALES
+               STOP RUN
+           END-IF.
+
+           OPEN INPUT TIPOSCLASE_FILE.
+           IF FS-TIPOSCLASE IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR TIPOSCLASE FS: " FS-TIPOSCLASE
+               STOP RUN
+           END-IF.
+
+           OPEN INPUT TIMES_FILE.
+           IF FS-TIMES IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR TIMES FS: " FS-TIMES
+               STOP RUN
+           END-IF.
+
+       CERRAR-ARCHIVOS.
+           CLOSE NOVTIMES1_FILE.
+           CLOSE NOVTIMES2_FILE.
+           CLOSE NOVTIMES3_FILE.
+           CLOSE PROFESORES_FILE.
+           CLOSE SUCURSALES_FILE.
+           CLOSE TIPOSCLASE_FILE.
+           CLOSE TIMES_FILE.
+
        MAIN-PROCEDURE.
       **
       * The main procedure of the program
