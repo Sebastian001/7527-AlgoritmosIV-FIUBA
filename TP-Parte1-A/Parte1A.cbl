@@ -10,13 +10,26 @@
       *-----------------------
        INPUT-OUTPUT SECTION.
       *-----------------------
-
        FILE-CONTROL.
            SELECT NOVTIMES1
            ASSIGN TO "./files/in/NovTimes1.dat"
            ORGANIZATION IS LINE SEQUENTIAL
-           FILE STATUS IS NOVTIMES1-STATUS.
+           FILE STATUS IS FS-NOVTIMES1.
 
+           SELECT NOVTIMES2
+           ASSIGN TO "./files/in/NovTimes2.dat"
+           ORGANIZATION IS LINE SEQUENTIAL
+           FILE STATUS IS FS-NOVTIMES2.
+
+           SELECT NOVTIMES3
+           ASSIGN TO "./files/in/NovTimes3.dat"
+           ORGANIZATION IS LINE SEQUENTIAL
+           FILE STATUS IS FS-NOVTIMES3.
+
+           SELECT PROFESORES
+           ASSIGN TO "./files/in/Profesores.dat"
+           ORGANIZATION IS LINE SEQUENTIAL
+           FILE STATUS IS FS-PROFESORES.
 
        DATA DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -24,7 +37,10 @@
       *-----------------------
        WORKING-STORAGE SECTION.
 
-       77 NOVTIMES1-STATUS PIC X(2).
+       77 FS-NOVTIMES1      PIC X(2).
+       77 FS-NOVTIMES2      PIC X(2).
+       77 FS-NOVTIMES3      PIC X(2).
+       77 FS-PROFESORES     PIC X(2).
 
       *-----------------------
        PROCEDURE DIVISION.
