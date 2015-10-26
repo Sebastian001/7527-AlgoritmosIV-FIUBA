@@ -1,9 +1,3 @@
-      ******************************************************************
-      * Author:
-      * Date:
-      * Purpose:
-      * Tectonics: cobc
-      ******************************************************************
        IDENTIFICATION DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
        PROGRAM-ID. "TP_PARTE_1A".
@@ -18,10 +12,10 @@
       *-----------------------
 
        FILE-CONTROL.
-           SELECT NOVTIMES1 ASSIGN TO INPUT
-           "./files/in/NovTimes1.dat"
+           SELECT NOVTIMES1
+           ASSIGN TO "./files/in/NovTimes1.dat"
            ORGANIZATION IS LINE SEQUENTIAL
-           FILE STATUS IS ALQUILERES-STATUS.
+           FILE STATUS IS NOVTIMES1-STATUS.
 
 
        DATA DIVISION.
@@ -29,6 +23,9 @@
        FILE SECTION.
       *-----------------------
        WORKING-STORAGE SECTION.
+
+       77 NOVTIMES1-STATUS PIC X(2).
+
       *-----------------------
        PROCEDURE DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
