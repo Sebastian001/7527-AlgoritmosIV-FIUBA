@@ -49,6 +49,19 @@
        DATA DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
        FILE SECTION.
+
+       FD    SUCURSALES_FILE LABEL RECORD STANDARD.
+        01    REG-SUCURSALES.
+               03 CLAVE-SUC.
+                   05  ALQ-PATENTE   PIC X(6).
+                   05  ALQ-FECHA.
+                        07  ALQ-FECHA-DD   pic 9(2).
+                        07  ALQ-FECHA-MM    pic 9(2).
+                        07  ALQ-FECHA-AAAA   pic 9(4).
+               03  ALQ-TIPODOC   PIC X.
+               03  ALQ-NRODOC    PIC X(20).
+               03  ALQ-IMPORTE   PIC 9(4)V99.
+
       *-----------------------
        WORKING-STORAGE SECTION.
 
@@ -107,6 +120,13 @@
                STOP RUN
            END-IF.
 
+       LEER-SUCURSALES.
+           READ SUCURSALES_FILE
+           RECORD AT END MOVE HIGH-VALUE TO CLAVE-SUC.
+           IF FS-SUCURSALES IS NOT EQUAL TO 00 AND 10
+               DISPLAY "ERROR LEER SUCURSALES FS: " FS-SUCURSALES
+           END-IF.
+
        CERRAR-ARCHIVOS.
            CLOSE NOVTIMES1_FILE.
            CLOSE NOVTIMES2_FILE.
@@ -117,10 +137,7 @@
            CLOSE TIMES_FILE.
 
        MAIN-PROCEDURE.
-      **
-      * The main procedure of the program
-      **
-            DISPLAY "Hello world"
-            STOP RUN.
-      ** add other procedures here
+              DISPLAY "Hello world"
+              STOP RUN.
+
        END PROGRAM "TP_PARTE_1A".
