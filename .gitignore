@@ -1,5 +1,7 @@
 # Created by https://www.gitignore.io/api/osx
 
+./TP-Parte1-A/bin/
+
 ### OSX ###
 .DS_Store
 .AppleDouble
