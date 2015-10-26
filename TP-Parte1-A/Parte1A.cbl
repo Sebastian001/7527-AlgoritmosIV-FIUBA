@@ -42,7 +42,7 @@
            FILE STATUS IS FS-TIPOSCLASE.
 
            SELECT TIMES_FILE
-           ASSIGN TO "./files/in/TiposClase.dat"
+           ASSIGN TO "./files/out/Times.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-TIMES.
 
