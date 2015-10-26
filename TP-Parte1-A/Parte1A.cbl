@@ -11,25 +11,40 @@
        INPUT-OUTPUT SECTION.
       *-----------------------
        FILE-CONTROL.
-           SELECT NOVTIMES1
+           SELECT NOVTIMES1_FILE
            ASSIGN TO "./files/in/NovTimes1.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES1.
 
-           SELECT NOVTIMES2
+           SELECT NOVTIMES2_FILE
            ASSIGN TO "./files/in/NovTimes2.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES2.
 
-           SELECT NOVTIMES3
+           SELECT NOVTIMES3_FILE
            ASSIGN TO "./files/in/NovTimes3.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES3.
 
-           SELECT PROFESORES
+           SELECT PROFESORES_FILE
            ASSIGN TO "./files/in/Profesores.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-PROFESORES.
+
+           SELECT SUCURSALES_FILE
+           ASSIGN TO "./files/in/Sucursales.dat"
+           ORGANIZATION IS LINE SEQUENTIAL
+           FILE STATUS IS FS-SUCURSALES.
+
+           SELECT TIPOSCLASE_FILE
+           ASSIGN TO "./files/in/TiposClase.dat"
+           ORGANIZATION IS LINE SEQUENTIAL
+           FILE STATUS IS FS-TIPOSCLASE.
+
+           SELECT TIMES_FILE
+           ASSIGN TO "./files/in/TiposClase.dat"
+           ORGANIZATION IS LINE SEQUENTIAL
+           FILE STATUS IS FS-TIMES.
 
        DATA DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -41,6 +56,9 @@
        77 FS-NOVTIMES2      PIC X(2).
        77 FS-NOVTIMES3      PIC X(2).
        77 FS-PROFESORES     PIC X(2).
+       77 FS-SUCURSALES     PIC X(2).
+       77 FS-TIPOSCLASE     PIC X(2).
+       77 FS-TIMES          PIC X(2).
 
       *-----------------------
        PROCEDURE DIVISION.
