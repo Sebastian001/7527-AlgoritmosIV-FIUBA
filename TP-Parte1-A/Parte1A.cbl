@@ -58,7 +58,6 @@
        77 FS-PROFESORES     PIC X(2).
        77 FS-SUCURSALES     PIC X(2).
        77 FS-TIPOSCLASE     PIC X(2).
-
        77 FS-TIMES          PIC X(2).
 
       *-----------------------
