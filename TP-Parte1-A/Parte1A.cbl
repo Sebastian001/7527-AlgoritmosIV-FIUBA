@@ -50,17 +50,25 @@
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
        FILE SECTION.
 
-       FD    SUCURSALES_FILE LABEL RECORD STANDARD.
-        01    REG-SUCURSALES.
-               03 CLAVE-SUC.
-                   05  ALQ-PATENTE   PIC X(6).
-                   05  ALQ-FECHA.
-                        07  ALQ-FECHA-DD   pic 9(2).
-                        07  ALQ-FECHA-MM    pic 9(2).
-                        07  ALQ-FECHA-AAAA   pic 9(4).
-               03  ALQ-TIPODOC   PIC X.
-               03  ALQ-NRODOC    PIC X(20).
-               03  ALQ-IMPORTE   PIC 9(4)V99.
+      *-------------------------------*
+      *- SUCURSALES FILE DESCRIPTION -*
+      *-------------------------------*
+       FD SUCURSALES_FILE LABEL RECORD STANDARD.
+       01 REG-SUCURSALES.
+              03 SUC-SUCURSAL      PIC X(03).
+              03 SUC-RAZON         PIC X(25).
+              03 SUC-DIRE          PIC X(20).
+              03 SUC-TEL           PIC X(20).
+              03 SUC-CUIT          PIC 9(11).
+
+      *-------------------------------*
+      *- TIPOSCLASE FILE DESCRIPTION -*
+      *-------------------------------*
+       FD TIPOSCLASE_FILE LABEL RECORD STANDARD.
+       01 REG-TIPOSCLASE.
+              03 TIP-CLASE  PIC X(04).
+              03 TIP-DESC   PIC X(20).
+              03 TIP-TARIFA PIC 9(5)V99.
 
       *-----------------------
        WORKING-STORAGE SECTION.
@@ -80,6 +88,7 @@
       *- INICIO LLAMADO A PROCEDIMIENTOS
 
            PERFORM INICIALIZAR.
+           PERFORM LEER-SUCURSALES.
            PERFORM CERRAR-ARCHIVOS.
            DISPLAY "Programa Ejecutado".
            STOP RUN.
@@ -131,9 +140,16 @@
 
        LEER-SUCURSALES.
            READ SUCURSALES_FILE
-           RECORD AT END MOVE HIGH-VALUE TO CLAVE-SUC.
+           RECORD AT END MOVE HIGH-VALUE TO SUC-SUCURSAL.
            IF FS-SUCURSALES IS NOT EQUAL TO 00 AND 10
-               DISPLAY "ERROR LEER SUCURSALES FS: " FS-SUCURSALES
+               DISPLAY "ERROR AL LEER SUCURSALES FS: " FS-SUCURSALES
+           END-IF.
+
+       LEER-TIPOSCLASE.
+           READ TIPOSCLASE_FILE
+           RECORD AT END MOVE HIGH-VALUE TO TIP-CLASE.
+           IF FS-TIPOSCLASE IS NOT EQUAL TO 00 AND 10
+               DISPLAY "ERROR AL LEER TIPOS-CLASE FS: " FS-TIPOSCLASE
            END-IF.
 
        CERRAR-ARCHIVOS.
