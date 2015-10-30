@@ -145,4 +145,12 @@
            CLOSE TIPOSCLASE_FILE.
            CLOSE TIMES_FILE.
 
+<<<<<<< HEAD
+=======
+
+       MAIN-PROCEDURE.
+              DISPLAY "Hello world"
+              STOP RUN.
+
+>>>>>>> origin/master
        END PROGRAM "TP_PARTE_1A".
