@@ -12,37 +12,37 @@
       *-----------------------
        FILE-CONTROL.
            SELECT NOVTIMES1_FILE
-           ASSIGN TO "./files/in/NovTimes1.dat"
+           ASSIGN TO "../files/in/NovTimes1.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES1.
 
            SELECT NOVTIMES2_FILE
-           ASSIGN TO "./files/in/NovTimes2.dat"
+           ASSIGN TO "../files/in/NovTimes2.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES2.
 
            SELECT NOVTIMES3_FILE
-           ASSIGN TO "./files/in/NovTimes3.dat"
+           ASSIGN TO "../files/in/NovTimes3.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES3.
 
            SELECT PROFESORES_FILE
-           ASSIGN TO "./files/in/Profesores.dat"
+           ASSIGN TO "../files/in/Profesores.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-PROFESORES.
 
            SELECT SUCURSALES_FILE
-           ASSIGN TO "./files/in/Sucursales.dat"
+           ASSIGN TO "../files/in/Sucursales.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-SUCURSALES.
 
            SELECT TIPOSCLASE_FILE
-           ASSIGN TO "./files/in/TiposClase.dat"
+           ASSIGN TO "../files/in/TiposClase.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-TIPOSCLASE.
 
            SELECT TIMES_FILE
-           ASSIGN TO "./files/out/Times.dat"
+           ASSIGN TO "../files/out/Times.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-TIMES.
 
@@ -76,6 +76,15 @@
       *-----------------------
        PROCEDURE DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+      *- INICIO LLAMADO A PROCEDIMIENTOS
+
+           PERFORM INICIALIZAR.
+           PERFORM CERRAR-ARCHIVOS.
+           DISPLAY "Programa Ejecutado".
+           STOP RUN.
+
+      *- FIN LLAMADO A PROCEDIMIENTOS
 
        INICIALIZAR.
            OPEN INPUT NOVTIMES1_FILE.
@@ -135,9 +144,5 @@
            CLOSE SUCURSALES_FILE.
            CLOSE TIPOSCLASE_FILE.
            CLOSE TIMES_FILE.
-
-       MAIN-PROCEDURE.
-              DISPLAY "Hello world"
-              STOP RUN.
 
        END PROGRAM "TP_PARTE_1A".
