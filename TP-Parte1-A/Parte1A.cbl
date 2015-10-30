@@ -201,6 +201,9 @@
            PERFORM LEER-NOVTIMES3.
            PERFORM LEER-PROFESORES.
 
+           PERFORM PROCESO1.
+           PERFORM PRINT-TOTALES.
+
            PERFORM CERRAR-ARCHIVOS.
            STOP RUN.
 
@@ -312,7 +315,31 @@
            MOVE TIP-CLASE   TO VEC-TIPOSCLASE-TARIFA(INDICE).
            MOVE TIP-DESC    TO VEC-TIPOSCLASE-TARIFA(INDICE).
            MOVE TIP-TARIFA  TO VEC-TIPOSCLASE-TARIFA(INDICE).
+
            PERFORM LEER-TIPOSCLASE.
+
+       DETERMINAR-PROF-MENOR.
+           DISPLAY "Determinar Profesor Menor".
+
+       PRINT-ENCABEZADO-PROF.
+           DISPLAY "Imprimir encabezado profesor".
+
+       PROCESAR-PROFESORES.
+           DISPLAY "Procesar Profesores".
+
+       PROCESO1.
+           DISPLAY "Ejecutar Proceso1".
+
+           PERFORM DETERMINAR-PROF-MENOR.
+           PERFORM PRINT-ENCABEZADO-PROF.
+           PERFORM PROCESAR-PROFESORES.
+           PERFORM PROCESO2.
+
+       PROCESO2.
+           DISPLAY "Ejecutar Proceso2".
+
+       PRINT-TOTALES.
+           DISPLAY "Imprimir totales".
 
        CERRAR-ARCHIVOS.
            CLOSE NOVTIMES1_FILE.
