@@ -46,6 +46,11 @@
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-TIMES.
 
+           SELECT LISTADO_FILE
+           ASSIGN TO "../files/out/LISTADO.txt"
+           ORGANIZATION IS LINE SEQUENTIAL
+           FILE STATUS IS FS-LISTADO.
+
        DATA DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
        FILE SECTION.
@@ -125,6 +130,8 @@
               03 NOV-TIPCLASE      PIC X(04).
               03 NOV-HORAS         PIC 9(2)V99.
 
+       FD LISTADO_FILE LABEL RECORD OMITTED.
+       01    REG-LISTADO PIC X(80).
       *-----------------------
        WORKING-STORAGE SECTION.
 
@@ -153,6 +160,7 @@
        77 FS-SUCURSALES     PIC X(2).
        77 FS-TIPOSCLASE     PIC X(2).
        77 FS-TIMES          PIC X(2).
+       77 FS-LISTADO        PIC X(2).
 
        01 FECHA-DE-HOY.
            03  FECHA-AAAA      pic 9(4).
@@ -175,13 +183,17 @@
            03 FILLER PIC X(38) VALUE "Listado de horas aplicadas".
            03 FILLER PIC x(26) VALUE SPACES.
 
+       01 vec.
+           03 VEC-TIPOSCLASE
+               OCCURS 50 TIMES
+               INDEXED BY INDICE.
+               05  VEC-TIPOSCLASE-TIPO        PIC X(04).
+               05  VEC-TIPOSCLASE-DESC        PIC X(20).
+               05  VEC-TIPOSCLASE-TARIFA      PIC 9(5)V99.
+       77 LINEA    PIC 99.
+       77 HOJA     PIC 999.
+       77 TOT-GRAL PIC ZZZZZZZZZ9V99.
 
-       01 VEC-TIPOSCLASE
-           OCCURS 50 TIMES
-           INDEXED BY INDICE.
-           03  VEC-TIPOSCLASE-TIPO        PIC X(04).
-           03  VEC-TIPOSCLASE-DESC        PIC X(20).
-           03  VEC-TIPOSCLASE-TARIFA      PIC 9(5)V99.
 
       *-----------------------
        PROCEDURE DIVISION.
@@ -211,12 +223,16 @@
 
        INICIALIZAR.
            DISPLAY "Inicializar Variables".
+           MOVE 0 TO LINEA.
+           MOVE 0 TO HOJA.
+           MOVE 0 TO TOT-GRAL.
 
        PRINT-ENCABEZADO.
            MOVE FUNCTION CURRENT-DATE TO FECHA-DE-HOY.
            MOVE CORRESPONDING FECHA-DE-HOY TO ENCABEZADO1.
            DISPLAY ENCABEZADO1.
            DISPLAY ENCABEZADO2.
+           ADD 3 TO LINEA.
 
        ABRIR-ARCHIVOS.
            OPEN INPUT NOVTIMES1_FILE.
