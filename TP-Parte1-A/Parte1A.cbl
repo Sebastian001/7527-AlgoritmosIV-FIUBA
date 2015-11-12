@@ -130,8 +130,11 @@
               03 NOV-TIPCLASE      PIC X(04).
               03 NOV-HORAS         PIC 9(2)V99.
 
+      *----------------------------------*
+      *- LISTADO FINAL FILE DESCRIPTION -*
+      *----------------------------------*
        FD LISTADO_FILE LABEL RECORD OMITTED.
-       01    REG-LISTADO PIC X(80).
+       01 REG-LISTADO PIC X(80).
       *-----------------------
        WORKING-STORAGE SECTION.
 
