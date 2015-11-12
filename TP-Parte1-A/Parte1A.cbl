@@ -12,42 +12,42 @@
       *-----------------------
        FILE-CONTROL.
            SELECT NOVTIMES1_FILE
-           ASSIGN TO "..\files\in\NovTimes1.dat"
+           ASSIGN TO "../files/in/NovTimes1.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES1.
 
            SELECT NOVTIMES2_FILE
-           ASSIGN TO "..\files\in\NovTimes2.dat"
+           ASSIGN TO "../files/in/NovTimes2.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES2.
 
            SELECT NOVTIMES3_FILE
-           ASSIGN TO "..\files\in\NovTimes3.dat"
+           ASSIGN TO "../files/in/NovTimes3.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-NOVTIMES3.
 
            SELECT PROFESORES_FILE
-           ASSIGN TO "..\files\in\Profesores.dat"
+           ASSIGN TO "../files/in/Profesores.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-PROFESORES.
 
            SELECT SUCURSALES_FILE
-           ASSIGN TO "..\files\in\Sucursales.dat"
+           ASSIGN TO "../files/in/Sucursales.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-SUCURSALES.
 
            SELECT TIPOSCLASE_FILE
-           ASSIGN TO "..\files\in\TiposClase.dat"
+           ASSIGN TO "../files/in/TiposClase.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-TIPOSCLASE.
 
            SELECT TIMES_FILE
-           ASSIGN TO "..\files\out\Times.dat"
+           ASSIGN TO "../files/out/Times.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-TIMES.
 
            SELECT LISTADO_FILE
-           ASSIGN TO "..\files\out\LISTADO.txt"
+           ASSIGN TO "../files/out/LISTADO.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-LISTADO.
 
