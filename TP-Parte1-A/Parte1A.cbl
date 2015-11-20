@@ -61,8 +61,8 @@
        FD TIMES_FILE LABEL RECORD STANDARD.
        01 REG-TIMES.
            03 CLAVE-TIMES.
-              05 CLAVE-SUC.
-                  07 CLAVE-FECHA.
+              05 CLAVE-TIMES-SUC.
+                  07 CLAVE-TIMES-FECHA.
                       09 TIM-NUMERO        PIC X(5).
                       09 TIM-FECHA         PIC 9(8).
                   07 TIM-SUCURSAL          PIC X(03).
@@ -206,6 +206,16 @@
                    07 MENOR-FECHA         PIC 9(8).
                05 MENOR-SUCURSAL          PIC X(03).
 
+       01 REG-NOVTIMES.
+           03 CLAVE-NOV.
+               05 CLAVE-SUC.
+                   07 CLAVE-FECHA.
+                       09 NOV-NUMERO        PIC X(5).
+                       09 NOV-FECHA         PIC 9(8).
+                   07 NOV-SUCURSAL          PIC X(03).
+           03 NOV-TIPCLASE                  PIC X(04).
+           03 NOV-HORAS                     PIC 9(2)V99.
+
        01 VEC.
            03 VEC-TIPOSCLASE
                OCCURS 50 TIMES
@@ -213,10 +223,16 @@
                05  VEC-TIPOSCLASE-TIPO        PIC X(04).
                05  VEC-TIPOSCLASE-DESC        PIC X(20).
                05  VEC-TIPOSCLASE-TARIFA      PIC 9(5)V99.
-       77 LINEA    PIC 99.
-       77 HOJA     PIC 999.
-       77 TOT-GRAL PIC ZZZZZZZZZ9V99.
 
+       77 LINEA           PIC 99.
+       77 HOJA            PIC 999.
+       77 TOT-GRAL        PIC 9999999999V99.
+       77 TOT-IMP-PROF    PIC 99999999V99.
+       77 TOT-HORAS-PROF  PIC 999V99.
+       77 TOT-IMP-FECHA   PIC 9999999V99.
+       77 TOT-HORAS-FECHA PIC 99V99.
+       77 IMPORTE         PIC 9999999V99.
+       77 HORAS           PIC 99V99.
 
       *-----------------------
        PROCEDURE DIVISION.
@@ -236,7 +252,9 @@
            PERFORM LEER-NOVTIMES3.
            PERFORM LEER-PROFESORES.
 
-           PERFORM PROCESO1.
+           PERFORM PROCESO1 UNTIL FS-NOVTIMES1 = 10
+               AND FS-NOVTIMES2 = 10 AND FS-NOVTIMES3 = 10
+               AND FS-PROFESORES = 10.
            PERFORM PRINT-TOTALES.
 
            PERFORM CERRAR-ARCHIVOS.
@@ -301,43 +319,40 @@
            END-IF.
 
        LEER-SUCURSALES.
-           READ SUCURSALES_FILE
-           RECORD AT END MOVE "SI" TO SUCURSALES-EOF.
+           READ SUCURSALES_FILE.
            IF FS-SUCURSALES IS NOT EQUAL TO 00 AND 10
                DISPLAY "ERROR AL LEER SUCURSALES FS: " FS-SUCURSALES
            END-IF.
 
        LEER-NOVTIMES1.
-           READ NOVTIMES1_FILE
-           RECORD AT END MOVE "SI" TO NOVTIMES1-EOF.
+           READ NOVTIMES1_FILE RECORD AT END MOVE HIGH-VALUE TO
+           CLAVE-NOV1.
            IF FS-NOVTIMES1 IS NOT EQUAL TO 00 AND 10
                DISPLAY "ERROR AL LEER NOVTIMES1 FS: " FS-NOVTIMES1
            END-IF.
 
        LEER-NOVTIMES2.
-           READ NOVTIMES2_FILE
-           RECORD AT END MOVE "SI" TO NOVTIMES2-EOF.
+           READ NOVTIMES2_FILE RECORD AT END MOVE HIGH-VALUE TO
+           CLAVE-NOV2.
            IF FS-NOVTIMES2 IS NOT EQUAL TO 00 AND 10
                DISPLAY "ERROR AL LEER NOVTIMES2 FS: " FS-NOVTIMES2
            END-IF.
 
        LEER-NOVTIMES3.
-           READ NOVTIMES3_FILE
-           RECORD AT END MOVE "SI" TO NOVTIMES3-EOF.
+           READ NOVTIMES3_FILE RECORD AT END MOVE HIGH-VALUE TO
+           CLAVE-NOV3.
            IF FS-NOVTIMES3 IS NOT EQUAL TO 00 AND 10
                DISPLAY "ERROR AL LEER NOVTIMES3 FS: " FS-NOVTIMES3
            END-IF.
 
        LEER-PROFESORES.
-           READ PROFESORES_FILE
-           RECORD AT END MOVE "SI" TO PROFESORES-EOF.
+           READ PROFESORES_FILE.
            IF FS-PROFESORES IS NOT EQUAL TO 00 AND 10
                DISPLAY "ERROR AL LEER PROFESORES FS: " FS-PROFESORES
            END-IF.
 
        LEER-TIPOSCLASE.
-           READ TIPOSCLASE_FILE
-           RECORD AT END MOVE "SI" TO TIPOSCLASE-EOF.
+           READ TIPOSCLASE_FILE.
            IF FS-TIPOSCLASE IS NOT EQUAL TO 00 AND 10
                DISPLAY "ERROR AL LEER TIPOS-CLASE FS: " FS-TIPOSCLASE
            END-IF.
@@ -361,26 +376,150 @@
            DISPLAY "Determinar clave Menor".
            MOVE CLAVE-NOV1 TO CLAVE-MENOR.
            IF CLAVE-SUC2 < CLAVE-MENOR
-               MOVE CLAVE-SUC2 TO CLAVE-MENOR.
+               MOVE CLAVE-SUC2 TO CLAVE-MENOR
+           END-IF.
            IF CLAVE-SUC3 < CLAVE-MENOR
-               MOVE CLAVE-SUC3 TO CLAVE-MENOR.
+               MOVE CLAVE-SUC3 TO CLAVE-MENOR
+           END-IF.
 
        PRINT-ENCABEZADO-PROF.
            DISPLAY "Imprimir encabezado profesor".
+           PERFORM LEER-PROFESORES UNTIL FS-PROFESORES = 10
+               OR MENOR-NUMERO <= CLAVE-PROF.
+           IF MENOR-NUMERO = CLAVE-PROF
+               PERFORM PRINT-DATOS-PROF
+           END-IF.
 
-       PROCESAR-PROFESORES.
-           DISPLAY "Procesar Profesores".
+       PRINT-DATOS-PROF.
+           DISPLAY "Imprimir datos profesor".
+           ADD 2 TO LINEA.
+
+       PRINT-ENCABEZADO-TABLA.
+           DISPLAY "Fecha   Sucursal   Tipo  Tarifa   Horas   Importe".
+           ADD 2 TO LINEA.
 
        PROCESO1.
            DISPLAY "Ejecutar Proceso1".
 
            PERFORM DETERMINAR-CLAVE-MENOR.
+           MOVE 0 TO TOT-IMP-PROF.
+           MOVE 0 TO TOT-HORAS-PROF.
            PERFORM PRINT-ENCABEZADO-PROF.
-           PERFORM PROCESAR-PROFESORES.
-           PERFORM PROCESO2.
+           PERFORM PRINT-ENCABEZADO-TABLA.
+           PERFORM PROCESO2 UNTIL (FS-NOVTIMES1 = 10
+               AND FS-NOVTIMES2 = 10 AND FS-NOVTIMES3 = 10
+               AND FS-PROFESORES = 10) OR (MENOR-NUMERO <> NOV1-NUMERO
+               AND MENOR-NUMERO <> NOV2-NUMERO
+               AND MENOR-NUMERO <> NOV3-NUMERO).
+           PERFORM PRINT-TOT-IMP-PROF.
+           PERFORM PRINT-TOT-HORAS-PROF.
+           PERFORM PRINT-SALTO-DE-PAGINA.
+           ADD 1 TO LINEA.
+
+       PRINT-TOT-IMP-PROF.
+           DISPLAY TOT-IMP-PROF.
+       PRINT-TOT-HORAS-PROF.
+           DISPLAY TOT-HORAS-PROF.
+       PRINT-SALTO-DE-PAGINA.
+           PERFORM PRINT-LINEAS-EN-BLANCO.
+           MOVE 0 TO LINEA.
+           ADD 1 TO HOJA.
+           PERFORM PRINT-ENCABEZADO-TABLA.
+           ADD 3 TO LINEA.
+
+       PRINT-LINEAS-EN-BLANCO.
+           DISPLAY"                ".
+           DISPLAY"                ".
 
        PROCESO2.
            DISPLAY "Ejecutar Proceso2".
+           PERFORM DETERMINAR-CLAVE-MENOR.
+           MOVE 0 TO TOT-IMP-FECHA.
+           MOVE 0 TO TOT-HORAS-FECHA.
+           PERFORM PROCESO3 UNTIL (FS-NOVTIMES1 = 10
+               AND FS-NOVTIMES2 = 10 AND FS-NOVTIMES3 = 10
+               AND FS-PROFESORES = 10)
+               OR (CLAVE-MENOR-FECHA <> CLAVE-FECHA1
+               AND CLAVE-MENOR-FECHA <> CLAVE-FECHA2
+               AND CLAVE-MENOR-FECHA <> CLAVE-FECHA3).
+           PERFORM PRINT-LINEA-PUNTEADA.
+           PERFORM PRINT-TOT-IMP-FECHA.
+           PERFORM PRIMT-TOT-HORAS-FECHA.
+           ADD 2 TO LINEA.
+           IF LINEA > 60
+               MOVE 0 TO LINEA
+               ADD 1 TO HOJA
+               PERFORM PRINT-ENCABEZADO
+               ADD 3 TO LINEA
+           END-IF.
+
+
+       PRINT-LINEA-PUNTEADA.
+           DISPLAY"-----------------------------------------".
+
+       PRINT-TOT-IMP-FECHA.
+           DISPLAY TOT-IMP-FECHA.
+
+       PRIMT-TOT-HORAS-FECHA.
+           DISPLAY TOT-HORAS-FECHA.
+
+       PROCESO3.
+           DISPLAY "Ejecutar Proceso3".
+           PERFORM DETERMINAR-CLAVE-MENOR.
+           PERFORM POS-SUC1 UNTIL FS-NOVTIMES1 = 10
+               OR CLAVE-MENOR-SUC <> CLAVE-SUC1.
+           PERFORM POS-SUC2 UNTIL FS-NOVTIMES2 = 10
+               OR CLAVE-MENOR-SUC <> CLAVE-SUC2.
+           PERFORM POS-SUC3 UNTIL FS-NOVTIMES3 = 10
+               OR CLAVE-MENOR-SUC <> CLAVE-SUC3.
+
+       POS-SUC1.
+           MOVE REG-NOVTIMES1 TO REG-NOVTIMES.
+           PERFORM PROCESO-NOV.
+           PERFORM LEER-NOVTIMES1.
+
+       PROCESO-NOV.
+           PERFORM GUARDAR-EN-TIMES.
+           PERFORM BUSCAR-TIPO-CLASE.
+           PERFORM CALCULAR-IMPORTE.
+           PERFORM PRINT-DATOS-E-IMPORTE.
+           PERFORM CALCULAR-TOTALES.
+
+       POS-SUC2.
+           MOVE REG-NOVTIMES2 TO REG-NOVTIMES.
+           PERFORM PROCESO-NOV.
+           PERFORM LEER-NOVTIMES2.
+
+       POS-SUC3.
+           MOVE REG-NOVTIMES3 TO REG-NOVTIMES.
+           PERFORM PROCESO-NOV.
+           PERFORM LEER-NOVTIMES3.
+
+       GUARDAR-EN-TIMES.
+           WRITE REG-TIMES FROM REG-NOVTIMES.
+
+       BUSCAR-TIPO-CLASE.
+           SET INDICE TO 1.
+           SEARCH VEC-TIPOSCLASE
+           WHEN VEC-TIPOSCLASE-TIPO(INDICE) IS EQUAL TO NOV-TIPCLASE
+               MOVE NOV-HORAS TO HORAS
+               PERFORM CALCULAR-IMPORTE
+           END-SEARCH.
+
+       CALCULAR-IMPORTE.
+           MULTIPLY VEC-TIPOSCLASE-TARIFA(INDICE) BY HORAS
+           GIVING IMPORTE.
+
+       PRINT-DATOS-E-IMPORTE.
+           DISPLAY IMPORTE.
+
+       CALCULAR-TOTALES.
+           DISPLAY "Calcula totales".
+           ADD IMPORTE TO TOT-IMP-FECHA.
+           ADD HORAS TO TOT-HORAS-FECHA.
+           ADD IMPORTE TO TOT-IMP-PROF.
+           ADD HORAS TO TOT-HORAS-PROF.
+           ADD IMPORTE TO TOT-GRAL.
 
        PRINT-TOTALES.
            DISPLAY "Imprimir totales".
