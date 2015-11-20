@@ -60,22 +60,26 @@
       *--------------------------*
        FD TIMES_FILE LABEL RECORD STANDARD.
        01 REG-TIMES.
-              03 TIM-NUMERO        PIC X(5).
-              03 TIM-FECHA         PIC 9(8).
-              03 TIM-SUCURSAL      PIC X(03).
-              03 TIM-TIPCLASE      PIC X(04).
-              03 TIM-HORAS         PIC 9(2)V99.
+           03 CLAVE-TIMES.
+              05 CLAVE-SUC.
+                  07 CLAVE-FECHA.
+                      09 TIM-NUMERO        PIC X(5).
+                      09 TIM-FECHA         PIC 9(8).
+                  07 TIM-SUCURSAL          PIC X(03).
+           03 TIM-TIPCLASE                 PIC X(04).
+           03 TIM-HORAS                    PIC 9(2)V99.
 
       *-------------------------------*
       *- PROFESORES FILE DESCRIPTION -*
       *-------------------------------*
        FD PROFESORES_FILE LABEL RECORD STANDARD.
        01 REG-PROFESORES.
-              03 PROF-NUMERO       PIC X(5).
-              03 PROF-DNI          PIC 9(8).
-              03 PROF-NOMBRE       PIC X(25).
-              03 PROF-DIRE         PIC X(20).
-              03 PROF-TEL          PIC X(20).
+              03 CLAVE-PROF.
+                   05 PROF-NUMERO       PIC X(5).
+              03 PROF-DNI               PIC 9(8).
+              03 PROF-NOMBRE            PIC X(25).
+              03 PROF-DIRE              PIC X(20).
+              03 PROF-TEL               PIC X(20).
 
       *-------------------------------*
       *- SUCURSALES FILE DESCRIPTION -*
@@ -102,33 +106,42 @@
       *------------------------------*
        FD NOVTIMES1_FILE LABEL RECORD STANDARD.
        01 REG-NOVTIMES1.
-              03 NOV-NUMERO        PIC X(5).
-              03 NOV-FECHA         PIC 9(8).
-              03 NOV-SUCURSAL      PIC X(03).
-              03 NOV-TIPCLASE      PIC X(04).
-              03 NOV-HORAS         PIC 9(2)V99.
+           03 CLAVE-NOV1.
+               05 CLAVE-SUC.
+                   07 CLAVE-FECHA.
+                       09 NOV-NUMERO        PIC X(5).
+                       09 NOV-FECHA         PIC 9(8).
+                   07 NOV-SUCURSAL          PIC X(03).
+           03 NOV-TIPCLASE                  PIC X(04).
+           03 NOV-HORAS                     PIC 9(2)V99.
 
       *------------------------------*
       *- NOVTIMES2 FILE DESCRIPTION -*
       *------------------------------*
        FD NOVTIMES2_FILE LABEL RECORD STANDARD.
        01 REG-NOVTIMES2.
-              03 NOV-NUMERO        PIC X(5).
-              03 NOV-FECHA         PIC 9(8).
-              03 NOV-SUCURSAL      PIC X(03).
-              03 NOV-TIPCLASE      PIC X(04).
-              03 NOV-HORAS         PIC 9(2)V99.
+           03 CLAVE-NOV1.
+               05 CLAVE-SUC.
+                   07 CLAVE-FECHA.
+                       09 NOV-NUMERO        PIC X(5).
+                       09 NOV-FECHA         PIC 9(8).
+                   07 NOV-SUCURSAL          PIC X(03).
+           03 NOV-TIPCLASE                  PIC X(04).
+           03 NOV-HORAS                     PIC 9(2)V99.
 
       *------------------------------*
       *- NOVTIMES3 FILE DESCRIPTION -*
       *------------------------------*
        FD NOVTIMES3_FILE LABEL RECORD STANDARD.
        01 REG-NOVTIMES3.
-              03 NOV-NUMERO        PIC X(5).
-              03 NOV-FECHA         PIC 9(8).
-              03 NOV-SUCURSAL      PIC X(03).
-              03 NOV-TIPCLASE      PIC X(04).
-              03 NOV-HORAS         PIC 9(2)V99.
+           03 CLAVE-NOV1.
+               05 CLAVE-SUC.
+                   07 CLAVE-FECHA.
+                       09 NOV-NUMERO        PIC X(5).
+                       09 NOV-FECHA         PIC 9(8).
+                   07 NOV-SUCURSAL          PIC X(03).
+           03 NOV-TIPCLASE                  PIC X(04).
+           03 NOV-HORAS                     PIC 9(2)V99.
 
       *----------------------------------*
       *- LISTADO FINAL FILE DESCRIPTION -*
@@ -186,7 +199,7 @@
            03 FILLER PIC X(38) VALUE "Listado de horas aplicadas".
            03 FILLER PIC x(26) VALUE SPACES.
 
-       01 vec.
+       01 VEC.
            03 VEC-TIPOSCLASE
                OCCURS 50 TIMES
                INDEXED BY INDICE.
