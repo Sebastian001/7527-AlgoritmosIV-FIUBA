@@ -107,41 +107,41 @@
        FD NOVTIMES1_FILE LABEL RECORD STANDARD.
        01 REG-NOVTIMES1.
            03 CLAVE-NOV1.
-               05 CLAVE-SUC.
-                   07 CLAVE-FECHA.
-                       09 NOV-NUMERO        PIC X(5).
-                       09 NOV-FECHA         PIC 9(8).
-                   07 NOV-SUCURSAL          PIC X(03).
-           03 NOV-TIPCLASE                  PIC X(04).
-           03 NOV-HORAS                     PIC 9(2)V99.
+               05 CLAVE-SUC1.
+                   07 CLAVE-FECHA1.
+                       09 NOV1-NUMERO        PIC X(5).
+                       09 NOV1-FECHA         PIC 9(8).
+                   07 NOV1-SUCURSAL          PIC X(03).
+           03 NOV1-TIPCLASE                  PIC X(04).
+           03 NOV1-HORAS                     PIC 9(2)V99.
 
       *------------------------------*
       *- NOVTIMES2 FILE DESCRIPTION -*
       *------------------------------*
        FD NOVTIMES2_FILE LABEL RECORD STANDARD.
        01 REG-NOVTIMES2.
-           03 CLAVE-NOV1.
-               05 CLAVE-SUC.
-                   07 CLAVE-FECHA.
-                       09 NOV-NUMERO        PIC X(5).
-                       09 NOV-FECHA         PIC 9(8).
-                   07 NOV-SUCURSAL          PIC X(03).
-           03 NOV-TIPCLASE                  PIC X(04).
-           03 NOV-HORAS                     PIC 9(2)V99.
+           03 CLAVE-NOV2.
+               05 CLAVE-SUC2.
+                   07 CLAVE-FECHA2.
+                       09 NOV2-NUMERO        PIC X(5).
+                       09 NOV2-FECHA         PIC 9(8).
+                   07 NOV2-SUCURSAL          PIC X(03).
+           03 NOV2-TIPCLASE                  PIC X(04).
+           03 NOV2-HORAS                     PIC 9(2)V99.
 
       *------------------------------*
       *- NOVTIMES3 FILE DESCRIPTION -*
       *------------------------------*
        FD NOVTIMES3_FILE LABEL RECORD STANDARD.
        01 REG-NOVTIMES3.
-           03 CLAVE-NOV1.
-               05 CLAVE-SUC.
-                   07 CLAVE-FECHA.
-                       09 NOV-NUMERO        PIC X(5).
-                       09 NOV-FECHA         PIC 9(8).
-                   07 NOV-SUCURSAL          PIC X(03).
-           03 NOV-TIPCLASE                  PIC X(04).
-           03 NOV-HORAS                     PIC 9(2)V99.
+           03 CLAVE-NOV3.
+               05 CLAVE-SUC3.
+                   07 CLAVE-FECHA3.
+                       09 NOV3-NUMERO        PIC X(5).
+                       09 NOV3-FECHA         PIC 9(8).
+                   07 NOV3-SUCURSAL          PIC X(03).
+           03 NOV3-TIPCLASE                  PIC X(04).
+           03 NOV3-HORAS                     PIC 9(2)V99.
 
       *----------------------------------*
       *- LISTADO FINAL FILE DESCRIPTION -*
@@ -198,6 +198,13 @@
            03 FILLER PIC x(26) VALUE SPACES.
            03 FILLER PIC X(38) VALUE "Listado de horas aplicadas".
            03 FILLER PIC x(26) VALUE SPACES.
+
+       01 CLAVE-MENOR.
+           03 CLAVE-MENOR-SUC.
+               05 CLAVE-MENOR-FECHA.
+                   07 MENOR-NUMERO        PIC X(5).
+                   07 MENOR-FECHA         PIC 9(8).
+               05 MENOR-SUCURSAL          PIC X(03).
 
        01 VEC.
            03 VEC-TIPOSCLASE
@@ -350,8 +357,13 @@
 
            PERFORM LEER-TIPOSCLASE.
 
-       DETERMINAR-PROF-MENOR.
-           DISPLAY "Determinar Profesor Menor".
+       DETERMINAR-CLAVE-MENOR.
+           DISPLAY "Determinar clave Menor".
+           MOVE CLAVE-NOV1 TO CLAVE-MENOR.
+           IF CLAVE-SUC2 < CLAVE-MENOR
+               MOVE CLAVE-SUC2 TO CLAVE-MENOR.
+           IF CLAVE-SUC3 < CLAVE-MENOR
+               MOVE CLAVE-SUC3 TO CLAVE-MENOR.
 
        PRINT-ENCABEZADO-PROF.
            DISPLAY "Imprimir encabezado profesor".
@@ -362,7 +374,7 @@
        PROCESO1.
            DISPLAY "Ejecutar Proceso1".
 
-           PERFORM DETERMINAR-PROF-MENOR.
+           PERFORM DETERMINAR-CLAVE-MENOR.
            PERFORM PRINT-ENCABEZADO-PROF.
            PERFORM PROCESAR-PROFESORES.
            PERFORM PROCESO2.
