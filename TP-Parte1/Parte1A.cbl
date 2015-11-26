@@ -466,7 +466,7 @@
            DISPLAY TOT-HORAS-FECHA.
 
        PROCESO3.
-           DISPLAY "Ejecutar Proceso3".
+           DISPLAY "EJECUTAR Proceso3".
            PERFORM DETERMINAR-CLAVE-MENOR.
            PERFORM POS-SUC1 UNTIL FS-NOVTIMES1 = 10
                OR CLAVE-MENOR-SUC <> CLAVE-SUC1.
