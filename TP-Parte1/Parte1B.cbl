@@ -1,12 +1,9 @@
-      ******************************************************************
-      * Author:
-      * Date:
-      * Purpose:
-      * Tectonics: cobc
-      ******************************************************************
        IDENTIFICATION DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-       PROGRAM-ID. YOUR-PROGRAM-NAME.
+       PROGRAM-ID. "TP_PARTE_1B".
+       AUTHOR. "Adrian Mouly - Sebastian Torres".
+       DATE-WRITTEN. "2do cuatrimestre 2015".
+
        ENVIRONMENT DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
        CONFIGURATION SECTION.
@@ -28,5 +25,4 @@
             DISPLAY "Hello world"
             STOP RUN.
       ** add other procedures here
-       END PROGRAM YOUR-PROGRAM-NAME.
-
+       END PROGRAM "TP_PARTE_1B".
