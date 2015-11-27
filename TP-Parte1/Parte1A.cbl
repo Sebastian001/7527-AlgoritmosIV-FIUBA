@@ -153,24 +153,6 @@
       *-----------------------
        WORKING-STORAGE SECTION.
 
-       77 SUCURSALES-EOF    PIC X(2)      VALUE "NO".
-          88 EOF                          VALUE "SI".
-
-       77 TIPOSCLASE-EOF    PIC X(2)      VALUE "NO".
-          88 EOF                          VALUE "SI".
-
-       77 NOVTIMES1-EOF     PIC X(2)      VALUE "NO".
-          88 EOF                          VALUE "SI".
-
-       77 NOVTIMES2-EOF     PIC X(2)      VALUE "NO".
-          88 EOF                          VALUE "SI".
-
-       77 NOVTIMES3-EOF     PIC X(2)      VALUE "NO".
-          88 EOF                          VALUE "SI".
-
-       77 PROFESORES-EOF    PIC X(2)      VALUE "NO".
-          88 EOF                          VALUE "SI".
-
        77 FS-NOVTIMES1      PIC X(2).
        77 FS-NOVTIMES2      PIC X(2).
        77 FS-NOVTIMES3      PIC X(2).
@@ -228,23 +210,36 @@
            03 FILLER       PIC X(10)   VALUE "   ------ ".
            03 FILLER       PIC X(20)   VALUE "      -----------  ".
 
-       01 DATOS-TABLA.
-           03 DT-FECHA-DD     PIC 9(2).
-           03 FILLER          PIC X       VALUE "/".
-           03 DT-FECHA-MM     PIC 9(2).
-           03 FILLER          PIC X       VALUE "/".
-           03 DT-FECHA-AAAA   PIC 9(4).
-           03 FILLER          PIC X(3)    VALUE ALL " ".
-           03 DT-SUC          PIC X(3).
-           03 FILLER          PIC X(6)    VALUE ALL " ".
-           03 DT-TIPO         PIC X(20).
-           03 FILLER          PIC X       VALUE " ".
-           03 DT-TARIFA       PIC ZZZZ9,99.
-           03 FILLER          PIC X(3)    VALUE ALL " ".
-           03 DT-HORAS        PIC Z9,99.
-           03 FILLER          PIC X(8)    VALUE ALL " ".
-           03 DT-IMPORTE      PIC ZZZZZZ9,99.
-           03 FILLER          PIC X(3)    VALUE ALL " ".
+       01 DATOS-TABLA1.
+           03 DT1-FECHA-DD     PIC 9(2).
+           03 FILLER           PIC X       VALUE "/".
+           03 DT1-FECHA-MM     PIC 9(2).
+           03 FILLER           PIC X       VALUE "/".
+           03 DT1-FECHA-AAAA   PIC 9(4).
+           03 FILLER           PIC X(3)    VALUE ALL " ".
+           03 DT1-SUC          PIC X(3).
+           03 FILLER           PIC X(6)    VALUE ALL " ".
+           03 DT1-TIPO         PIC X(20).
+           03 FILLER           PIC X       VALUE " ".
+           03 DT1-TARIFA       PIC ZZZZ9,99.
+           03 FILLER           PIC X(3)    VALUE ALL " ".
+           03 DT1-HORAS        PIC Z9,99.
+           03 FILLER           PIC X(8)    VALUE ALL " ".
+           03 DT1-IMPORTE      PIC ZZZZZZ9,99.
+           03 FILLER           PIC X(3)    VALUE ALL " ".
+
+       01 DATOS-TABLA2.
+           03 FILLER           PIC X(13)   VALUE ALL " ".
+           03 DT2-SUC          PIC X(3).
+           03 FILLER           PIC X(6)    VALUE ALL " ".
+           03 DT2-TIPO         PIC X(20).
+           03 FILLER           PIC X       VALUE " ".
+           03 DT2-TARIFA       PIC ZZZZ9,99.
+           03 FILLER           PIC X(3)    VALUE ALL " ".
+           03 DT2-HORAS        PIC Z9,99.
+           03 FILLER           PIC X(8)    VALUE ALL " ".
+           03 DT2-IMPORTE      PIC ZZZZZZ9,99.
+           03 FILLER           PIC X(3)    VALUE ALL " ".
 
        01 FECHA-DATO.
            03  FECHAD-AAAA      pic 9(4).
@@ -311,6 +306,7 @@
        77 TARIFA          PIC 9(5)V99.
        77 RESTO-LINEAS    PIC 99.
        77 I               PIC 99.
+       77 FECHA-ANT       PIC 9(8).
 
       *-----------------------
        PROCEDURE DIVISION.
@@ -476,7 +472,7 @@
            DISPLAY "Imprimir encabezado profesor".
            PERFORM PRINT-ENCABEZADO.
            PERFORM LEER-PROFESORES UNTIL FS-PROFESORES = 10
-               OR MENOR-NUMERO <= CLAVE-PROF.
+               OR MENOR-NUMERO < CLAVE-PROF.
            IF MENOR-NUMERO = CLAVE-PROF
                PERFORM PRINT-DATOS-PROF
            ELSE
@@ -507,6 +503,7 @@
            MOVE 0 TO TOT-IMP-PROF.
            MOVE 0 TO TOT-HORAS-PROF.
            PERFORM PRINT-ENCABEZADO-PROF.
+           MOVE HIGH-VALUE TO FECHA-ANT.
            PERFORM PROCESO2 UNTIL (FS-NOVTIMES1 = 10
                AND FS-NOVTIMES2 = 10 AND FS-NOVTIMES3 = 10
                AND FS-PROFESORES = 10) OR (MENOR-NUMERO <> NOV1-NUMERO
@@ -619,16 +616,26 @@
 
        PRINT-DATOS-E-IMPORTE.
            DISPLAY IMPORTE.
-           MOVE NOV-FECHA TO FECHA-DATO.
-           MOVE FECHAD-DD TO DT-FECHA-DD.
-           MOVE FECHAD-MM TO DT-FECHA-MM.
-           MOVE FECHAD-AAAA TO DT-FECHA-AAAA.
-           MOVE NOV-SUCURSAL TO DT-SUC.
-           MOVE DESCRIPCION TO DT-TIPO.
-           MOVE TARIFA TO DT-TARIFA.
-           MOVE NOV-HORAS TO DT-HORAS.
-           MOVE IMPORTE TO DT-IMPORTE.
-           WRITE REG-LISTADO FROM DATOS-TABLA.
+           IF FECHA-ANT <> NOV-FECHA
+               MOVE NOV-FECHA TO FECHA-DATO
+               MOVE FECHAD-DD TO DT1-FECHA-DD
+               MOVE FECHAD-MM TO DT1-FECHA-MM
+               MOVE FECHAD-AAAA TO DT1-FECHA-AAAA
+               MOVE NOV-SUCURSAL TO DT1-SUC
+               MOVE DESCRIPCION TO DT1-TIPO
+               MOVE TARIFA TO DT1-TARIFA
+               MOVE NOV-HORAS TO DT1-HORAS
+               MOVE IMPORTE TO DT1-IMPORTE
+               WRITE REG-LISTADO FROM DATOS-TABLA1
+               MOVE MENOR-FECHA TO FECHA-ANT
+            ELSE
+               MOVE NOV-SUCURSAL TO DT2-SUC
+               MOVE DESCRIPCION TO DT2-TIPO
+               MOVE TARIFA TO DT2-TARIFA
+               MOVE NOV-HORAS TO DT2-HORAS
+               MOVE IMPORTE TO DT2-IMPORTE
+               WRITE REG-LISTADO FROM DATOS-TABLA2
+            END-IF.
 
        CALCULAR-TOTALES.
            DISPLAY "Calcula totales".
