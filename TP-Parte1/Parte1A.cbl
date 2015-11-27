@@ -7,6 +7,8 @@
        ENVIRONMENT DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
        CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
       *-----------------------
        INPUT-OUTPUT SECTION.
       *-----------------------
@@ -47,7 +49,7 @@
            FILE STATUS IS FS-TIMES.
 
            SELECT LISTADO_FILE
-           ASSIGN TO "../files/out/LISTADO.txt"
+           ASSIGN TO "../files/out/Listado.txt"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-LISTADO.
 
@@ -184,20 +186,92 @@
            03  FECHA-DD        pic 9(2).
 
        01 ENCABEZADO1.
-           03  FILLER      PIC X(9)    VALUE "Fecha: ".
+           03  FILLER      PIC X(6)    VALUE "Fecha ".
            03  FECHA-DD    PIC 9(2).
            03  FILLER      PIC X       VALUE "/".
            03  FECHA-MM    PIC 9(2).
            03  FILLER      PIC X       VALUE "/".
            03  FECHA-AAAA  PIC 9(4).
-           03  FILLER      PIC X(50)   VALUE SPACES.
-           03  FILLER      PIC X(6)    VALUE "Hoja: ".
+           03  FILLER      PIC X(45)   VALUE SPACES.
+           03  FILLER      PIC X(5)    VALUE "Hoja ".
            03  E1-HOJA     PIC 9(3).
 
        01 ENCABEZADO2.
-           03 FILLER PIC x(26) VALUE SPACES.
+           03 FILLER PIC x(16) VALUE SPACES.
            03 FILLER PIC X(38) VALUE "Listado de horas aplicadas".
            03 FILLER PIC x(26) VALUE SPACES.
+
+       01 LINEA-EN-BLANCO.
+           03 FILLER PIC X(80) VALUE SPACES.
+
+       01 ENCABEZADO3-PROF.
+           03  FILLER      PIC X(10)   VALUE "Profesor: ".
+           03  E3-PROF-NUM PIC X(5).
+           03  FILLER      PIC X(5)    VALUE SPACES.
+           03  FILLER      PIC X(8)    VALUE "Nombre: ".
+           03  E3-PROF-NOM PIC X(25).
+           03  FILLER      PIC X(27)   VALUE SPACES.
+
+       01 ENCABEZADO4-TABLA.
+           03 FILLER       PIC X(10)   VALUE "   Fecha  ".
+           03 FILLER       PIC X(10)   VALUE " Sucursal ".
+           03 FILLER       PIC X(22)   VALUE " Tipo de clase       ".
+           03 FILLER       PIC X(10)   VALUE "    Tarifa".
+           03 FILLER       PIC X(10)   VALUE "  Horas   ".
+           03 FILLER       PIC X(20)   VALUE "       Importe ".
+
+       01 LINEA-TABLA.
+           03 FILLER       PIC X(80)   VALUE ALL "_".
+
+       01 LINEA-SUBTOTAL.
+           03 FILLER       PIC X(50)   VALUE ALL " ".
+           03 FILLER       PIC X(10)   VALUE "   ------ ".
+           03 FILLER       PIC X(20)   VALUE "      -----------  ".
+
+       01 DATOS-TABLA.
+           03 DT-FECHA-DD     PIC 9(2).
+           03 FILLER          PIC X       VALUE "/".
+           03 DT-FECHA-MM     PIC 9(2).
+           03 FILLER          PIC X       VALUE "/".
+           03 DT-FECHA-AAAA   PIC 9(4).
+           03 FILLER          PIC X(3)    VALUE ALL " ".
+           03 DT-SUC          PIC X(3).
+           03 FILLER          PIC X(6)    VALUE ALL " ".
+           03 DT-TIPO         PIC X(20).
+           03 FILLER          PIC X       VALUE " ".
+           03 DT-TARIFA       PIC ZZZZ9,99.
+           03 FILLER          PIC X(3)    VALUE ALL " ".
+           03 DT-HORAS        PIC Z9,99.
+           03 FILLER          PIC X(8)    VALUE ALL " ".
+           03 DT-IMPORTE      PIC ZZZZZZ9,99.
+           03 FILLER          PIC X(3)    VALUE ALL " ".
+
+       01 FECHA-DATO.
+           03  FECHAD-AAAA      pic 9(4).
+           03  FECHAD-MM        pic 9(2).
+           03  FECHAD-DD        pic 9(2).
+
+       01 ENCABEZADO5-SUBTOT-FECHA.
+           03 FILLER           PIC X(17)    VALUE "Totales por fecha".
+           03 FILLER           PIC X(36)    VALUE ALL " ".
+           03 E5-TOT-HORAS     PIC ZZ9,99.
+           03 FILLER           PIC X(7)     VALUE ALL " ".
+           03 E5-TOT-IMPORTE   PIC ZZZZZZZ9,99.
+           03 FILLER           PIC X(2)     VALUE ALL " ".
+
+       01 ENCABEZADO6-SUBTOT-PROFESOR.
+           03 FILLER          PIC X(20)    VALUE "Totales por Profesor".
+           03 FILLER          PIC X(32)    VALUE ALL " ".
+           03 E6-TOT-HORAS    PIC ZZZ9,99.
+           03 FILLER          PIC X(6)     VALUE ALL " ".
+           03 E6-TOT-IMPORTE  PIC ZZZZZZZZ9,99.
+           03 FILLER          PIC X(2)     VALUE ALL " ".
+
+       01 ENCABEZADO7-TOT-GENERAL.
+           03 FILLER          PIC X(13)    VALUE "Total general".
+           03 FILLER          PIC X(51)    VALUE ALL " ".
+           03 E7-TOT-IMPORTE  PIC ZZZZZZZZZ9,99.
+           03 FILLER          PIC X        VALUE " ".
 
        01 CLAVE-MENOR.
            03 CLAVE-MENOR-SUC.
@@ -233,6 +307,10 @@
        77 TOT-HORAS-FECHA PIC 99V99.
        77 IMPORTE         PIC 9999999V99.
        77 HORAS           PIC 99V99.
+       77 DESCRIPCION     PIC X(20).
+       77 TARIFA          PIC 9(5)V99.
+       77 RESTO-LINEAS    PIC 99.
+       77 I               PIC 99.
 
       *-----------------------
        PROCEDURE DIVISION.
@@ -241,7 +319,6 @@
       *- INICIO LLAMADO A PROCEDIMIENTOS
 
            PERFORM INICIALIZAR.
-           PERFORM PRINT-ENCABEZADO.
            PERFORM ABRIR-ARCHIVOS.
 
            PERFORM LEER-TIPOSCLASE.
@@ -255,7 +332,9 @@
            PERFORM PROCESO1 UNTIL FS-NOVTIMES1 = 10
                AND FS-NOVTIMES2 = 10 AND FS-NOVTIMES3 = 10
                AND FS-PROFESORES = 10.
-           PERFORM PRINT-TOTALES.
+
+           PERFORM PRINT-ENCABEZADO.
+           PERFORM PRINT-TOTAL-GRAL.
 
            PERFORM CERRAR-ARCHIVOS.
            STOP RUN.
@@ -265,7 +344,7 @@
        INICIALIZAR.
            DISPLAY "Inicializar Variables".
            MOVE 0 TO LINEA.
-           MOVE 0 TO HOJA.
+           MOVE 1 TO HOJA.
            MOVE 0 TO TOT-GRAL.
 
        PRINT-ENCABEZADO.
@@ -273,6 +352,10 @@
            MOVE CORRESPONDING FECHA-DE-HOY TO ENCABEZADO1.
            DISPLAY ENCABEZADO1.
            DISPLAY ENCABEZADO2.
+           MOVE HOJA TO E1-HOJA.
+           WRITE REG-LISTADO FROM ENCABEZADO1.
+           WRITE REG-LISTADO FROM ENCABEZADO2.
+           WRITE REG-LISTADO FROM LINEA-EN-BLANCO.
            ADD 3 TO LINEA.
 
        ABRIR-ARCHIVOS.
@@ -315,6 +398,12 @@
            OPEN OUTPUT TIMES_FILE.
            IF FS-TIMES IS NOT EQUAL TO 00
                DISPLAY "ERROR AL ABRIR TIMES FS: " FS-TIMES
+               STOP RUN
+           END-IF.
+
+           OPEN OUTPUT LISTADO_FILE.
+           IF FS-LISTADO IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR LISTADO FS: " FS-LISTADO
                STOP RUN
            END-IF.
 
@@ -381,23 +470,34 @@
            IF CLAVE-SUC3 < CLAVE-MENOR
                MOVE CLAVE-SUC3 TO CLAVE-MENOR
            END-IF.
+           DISPLAY "CLAVE MENOR PROFESOR " MENOR-NUMERO.
 
        PRINT-ENCABEZADO-PROF.
            DISPLAY "Imprimir encabezado profesor".
+           PERFORM PRINT-ENCABEZADO.
            PERFORM LEER-PROFESORES UNTIL FS-PROFESORES = 10
                OR MENOR-NUMERO <= CLAVE-PROF.
            IF MENOR-NUMERO = CLAVE-PROF
                PERFORM PRINT-DATOS-PROF
+           ELSE
+               WRITE REG-LISTADO FROM "PROFESOR INEXISTENTE"
+               WRITE REG-LISTADO FROM MENOR-NUMERO
+               DISPLAY "PROFESOR " MENOR-NUMERO " NO ENCONTRADO"
            END-IF.
 
        PRINT-DATOS-PROF.
            DISPLAY "Imprimir datos profesor".
            DISPLAY PROF-NOMBRE.
            DISPLAY PROF-DNI.
-           ADD 2 TO LINEA.
+           MOVE PROF-NUMERO TO E3-PROF-NUM.
+           MOVE PROF-NOMBRE TO E3-PROF-NOM.
+           WRITE REG-LISTADO FROM ENCABEZADO3-PROF.
+           ADD 1 TO LINEA.
 
        PRINT-ENCABEZADO-TABLA.
            DISPLAY "Fecha   Sucursal   Tipo  Tarifa   Horas   Importe".
+           WRITE REG-LISTADO FROM ENCABEZADO4-TABLA.
+           WRITE REG-LISTADO FROM LINEA-TABLA.
            ADD 2 TO LINEA.
 
        PROCESO1.
@@ -407,46 +507,45 @@
            MOVE 0 TO TOT-IMP-PROF.
            MOVE 0 TO TOT-HORAS-PROF.
            PERFORM PRINT-ENCABEZADO-PROF.
-           PERFORM PRINT-ENCABEZADO-TABLA.
            PERFORM PROCESO2 UNTIL (FS-NOVTIMES1 = 10
                AND FS-NOVTIMES2 = 10 AND FS-NOVTIMES3 = 10
                AND FS-PROFESORES = 10) OR (MENOR-NUMERO <> NOV1-NUMERO
                AND MENOR-NUMERO <> NOV2-NUMERO
                AND MENOR-NUMERO <> NOV3-NUMERO).
-           PERFORM PRINT-TOT-IMP-PROF.
-           PERFORM PRINT-TOT-HORAS-PROF.
+           PERFORM PRINT-TOT-POR-PROFESOR.
            PERFORM PRINT-SALTO-DE-PAGINA.
-           ADD 1 TO LINEA.
 
-       PRINT-TOT-IMP-PROF.
-           DISPLAY TOT-IMP-PROF.
-       PRINT-TOT-HORAS-PROF.
-           DISPLAY TOT-HORAS-PROF.
+       PRINT-TOT-POR-PROFESOR.
+           MOVE TOT-HORAS-PROF TO E6-TOT-HORAS.
+           MOVE TOT-IMP-PROF TO E6-TOT-IMPORTE.
+           WRITE REG-LISTADO FROM ENCABEZADO6-SUBTOT-PROFESOR.
+
        PRINT-SALTO-DE-PAGINA.
-           PERFORM PRINT-LINEAS-EN-BLANCO.
+           SUBTRACT LINEA FROM 60 GIVING RESTO-LINEAS.
+           MOVE 1 TO I.
+           PERFORM PRINT-LINEAS-EN-BLANCO UNTIL I > RESTO-LINEAS.
            MOVE 0 TO LINEA.
            ADD 1 TO HOJA.
-           PERFORM PRINT-ENCABEZADO-TABLA.
-           ADD 3 TO LINEA.
 
        PRINT-LINEAS-EN-BLANCO.
-           DISPLAY"                ".
-           DISPLAY"                ".
+           WRITE REG-LISTADO FROM LINEA-EN-BLANCO.
+           ADD 1 TO I.
 
        PROCESO2.
            DISPLAY "Ejecutar Proceso2".
            PERFORM DETERMINAR-CLAVE-MENOR.
            MOVE 0 TO TOT-IMP-FECHA.
            MOVE 0 TO TOT-HORAS-FECHA.
+           WRITE REG-LISTADO FROM LINEA-EN-BLANCO.
+           PERFORM PRINT-ENCABEZADO-TABLA.
            PERFORM PROCESO3 UNTIL (FS-NOVTIMES1 = 10
                AND FS-NOVTIMES2 = 10 AND FS-NOVTIMES3 = 10
                AND FS-PROFESORES = 10)
                OR (CLAVE-MENOR-FECHA <> CLAVE-FECHA1
                AND CLAVE-MENOR-FECHA <> CLAVE-FECHA2
                AND CLAVE-MENOR-FECHA <> CLAVE-FECHA3).
-           PERFORM PRINT-LINEA-PUNTEADA.
-           PERFORM PRINT-TOT-IMP-FECHA.
-           PERFORM PRIMT-TOT-HORAS-FECHA.
+           PERFORM PRINT-LINEA-SUBTOTAL.
+           PERFORM PRINT-TOT-POR-FECHA.
            ADD 2 TO LINEA.
            IF LINEA > 60
                MOVE 0 TO LINEA
@@ -455,15 +554,15 @@
                ADD 3 TO LINEA
            END-IF.
 
+       PRINT-LINEA-SUBTOTAL.
+           DISPLAY"                      ------   --------------".
+           WRITE REG-LISTADO FROM LINEA-SUBTOTAL.
+           ADD 1 TO LINEA.
 
-       PRINT-LINEA-PUNTEADA.
-           DISPLAY"-----------------------------------------".
-
-       PRINT-TOT-IMP-FECHA.
-           DISPLAY TOT-IMP-FECHA.
-
-       PRIMT-TOT-HORAS-FECHA.
-           DISPLAY TOT-HORAS-FECHA.
+       PRINT-TOT-POR-FECHA.
+           MOVE TOT-HORAS-FECHA TO E5-TOT-HORAS.
+           MOVE TOT-IMP-FECHA TO E5-TOT-IMPORTE.
+           WRITE REG-LISTADO FROM ENCABEZADO5-SUBTOT-FECHA.
 
        PROCESO3.
            DISPLAY "EJECUTAR Proceso3".
@@ -493,7 +592,6 @@
        PROCESO-NOV.
            PERFORM GUARDAR-EN-TIMES.
            PERFORM BUSCAR-TIPO-CLASE.
-           PERFORM CALCULAR-IMPORTE.
            PERFORM PRINT-DATOS-E-IMPORTE.
            PERFORM CALCULAR-TOTALES.
 
@@ -508,6 +606,8 @@
            WHEN VEC-TIPOSCLASE-TIPO(INDICE) IS EQUAL TO NOV-TIPCLASE
                MOVE NOV-HORAS TO HORAS
                PERFORM CALCULAR-IMPORTE
+               MOVE VEC-TIPOSCLASE-DESC(INDICE) TO DESCRIPCION
+               MOVE VEC-TIPOSCLASE-TARIFA(INDICE) TO TARIFA
            END-SEARCH.
 
        NO-ENCONTRADO.
@@ -519,6 +619,16 @@
 
        PRINT-DATOS-E-IMPORTE.
            DISPLAY IMPORTE.
+           MOVE NOV-FECHA TO FECHA-DATO.
+           MOVE FECHAD-DD TO DT-FECHA-DD.
+           MOVE FECHAD-MM TO DT-FECHA-MM.
+           MOVE FECHAD-AAAA TO DT-FECHA-AAAA.
+           MOVE NOV-SUCURSAL TO DT-SUC.
+           MOVE DESCRIPCION TO DT-TIPO.
+           MOVE TARIFA TO DT-TARIFA.
+           MOVE NOV-HORAS TO DT-HORAS.
+           MOVE IMPORTE TO DT-IMPORTE.
+           WRITE REG-LISTADO FROM DATOS-TABLA.
 
        CALCULAR-TOTALES.
            DISPLAY "Calcula totales".
@@ -528,9 +638,11 @@
            ADD HORAS TO TOT-HORAS-PROF.
            ADD IMPORTE TO TOT-GRAL.
 
-       PRINT-TOTALES.
+       PRINT-TOTAL-GRAL.
            DISPLAY "Imprimir totales".
            DISPLAY TOT-GRAL.
+           MOVE TOT-GRAL TO E7-TOT-IMPORTE.
+           WRITE REG-LISTADO FROM ENCABEZADO7-TOT-GENERAL.
 
        CERRAR-ARCHIVOS.
            CLOSE NOVTIMES1_FILE.
@@ -540,5 +652,6 @@
            CLOSE SUCURSALES_FILE.
            CLOSE TIPOSCLASE_FILE.
            CLOSE TIMES_FILE.
+           CLOSE LISTADO_FILE.
 
        END PROGRAM "TP_PARTE_1A".
