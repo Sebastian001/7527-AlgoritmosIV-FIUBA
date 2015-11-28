@@ -284,9 +284,12 @@
            PERFORM BUSCAR-SUCURSAL.
 
            IF (VEC-ANIOS-ELEM(WS-IND-ANIO) = WS-TIM-ANIO)
-                  AND (VEC-SUCURSALES-ELM(WS-IND-SUC) = WS-TIM-SUC)
+                  AND (VEC-SUCURSALES-SUCURSAL(WS-IND-SUC) = WS-TIM-SUC)
 
                PERFORM GUARDAR-VALORES
+
+           ELSE
+               DISPLAY "NO encontrado"
 
            END-IF.
 
@@ -317,13 +320,16 @@
            MOVE 1 TO WS-IND-SUC.
 
            PERFORM INC-IND-SUC
+           VARYING INDICE FROM 1 BY 1
            UNTIL (WS-IND-SUC > CON-CANT-SUC
-                  AND VEC-SUCURSALES-ELM(WS-IND-SUC) = WS-TIM-SUC).
+                  AND VEC-SUCURSALES-SUCURSAL(WS-IND-SUC) = WS-TIM-SUC).
 
        INC-IND-ANIO.
            ADD 1 TO WS-IND-ANIO.
 
        INC-IND-SUC.
+           DISPLAY "INCREMENTAR SUC " WS-IND-SUC.
+
            ADD 1 TO WS-IND-SUC.
 
        GUARDAR-VALORES.
