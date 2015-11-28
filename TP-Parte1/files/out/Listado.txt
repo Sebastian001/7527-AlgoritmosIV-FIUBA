@@ -1,0 +1,445 @@
+Fecha 28/11/2015                                             Hoja 001
+                Listado de horas aplicadas
+
+Profesor: ABC12     Nombre: JUAN ALBERTO RODRIGUEZ
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+02/00/0000   001      AEROBOX              99999,00   15,00        1499985,00
+                                                     ------       -----------
+Totales por fecha                                     15,00        1499985,00
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+03/00/0000   001      PILATES                200,11   30,00           6003,30
+                                                     ------       -----------
+Totales por fecha                                     30,00           6003,30
+Totales por Profesor                                  45,00        1505988,30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 28/11/2015                                             Hoja 002
+                Listado de horas aplicadas
+
+Profesor: BBB02     Nombre: ROBERTO GONZALEZ
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+04/00/0000   001      FIERROS                100,11   10,00           1001,10
+                                                     ------       -----------
+Totales por fecha                                     10,00           1001,10
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+06/00/0000   001      STEPUP                 432,11   70,00          30247,70
+                                                     ------       -----------
+Totales por fecha                                     70,00          30247,70
+Totales por Profesor                                  80,00          31248,80
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 28/11/2015                                             Hoja 003
+                Listado de horas aplicadas
+
+Profesor: DDD11     Nombre: JAVIER ALVAREZ
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+02/00/0000   002      AEROBOX              99999,00   10,11        1010989,89
+                                                     ------       -----------
+Totales por fecha                                     10,11        1010989,89
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+04/00/0000   002      PILATES                200,11   50,11          10027,51
+                                                     ------       -----------
+Totales por fecha                                     50,11          10027,51
+Totales por Profesor                                  60,22        1021017,40
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 28/11/2015                                             Hoja 004
+                Listado de horas aplicadas
+
+Profesor: FFF11     Nombre: MATIAS PANCLASIO
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+05/00/0000   002      FIERROS                100,11   50,11           5016,51
+                                                     ------       -----------
+Totales por fecha                                     50,11           5016,51
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+06/00/0000   002      STEPUP                 432,11   70,11          30295,23
+                                                     ------       -----------
+Totales por fecha                                     70,11          30295,23
+Totales por Profesor                                 120,22          35311,74
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 28/11/2015                                             Hoja 005
+                Listado de horas aplicadas
+
+Profesor: HHH11     Nombre: CARLOS DE CRISTOFARO
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+01/00/0000   003      AEROBOX              99999,00    5,11         510994,89
+01/00/0000   003      FIERROS                100,11    1,11            111,12
+                                                     ------       -----------
+Totales por fecha                                      6,22         511106,01
+Totales por Profesor                                   6,22         511106,01
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 28/11/2015                                             Hoja 006
+                Listado de horas aplicadas
+
+Profesor: JJJ33     Nombre: SANTIAGO LOPEZ
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+02/00/0000   003      STEPUP                 432,11    2,11            911,75
+                                                     ------       -----------
+Totales por fecha                                      2,11            911,75
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+03/00/0000   003      CINTA                  322,11    3,11           1001,76
+                                                     ------       -----------
+Totales por fecha                                      3,11           1001,76
+Totales por Profesor                                   5,22           1913,51
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 28/11/2015                                             Hoja 007
+                Listado de horas aplicadas
+
+PROFESOR INEXISTENTE
+ÿÿÿÿÿ
+Totales por Profesor                                   0,00              0,00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 28/11/2015                                             Hoja 008
+                Listado de horas aplicadas
+
+Total general                                                      3106585,76
