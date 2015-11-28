@@ -31,11 +31,11 @@
       *-------------------------------*
        FD SUCURSALES_FILE LABEL RECORD STANDARD.
        01 REG-SUCURSALES.
-              03 SUC-SUCURSAL      PIC X(03).
-              03 SUC-RAZON         PIC X(25).
-              03 SUC-DIRE          PIC X(20).
-              03 SUC-TEL           PIC X(20).
-              03 SUC-CUIT          PIC 9(11).
+           03 SUC-SUCURSAL      PIC X(03).
+           03 SUC-RAZON         PIC X(25).
+           03 SUC-DIRE          PIC X(20).
+           03 SUC-TEL           PIC X(20).
+           03 SUC-CUIT          PIC 9(11).
 
       *--------------------------*
       *- TIMES FILE DESCRIPTION -*
@@ -66,14 +66,18 @@
        01 WS-HOJA              PIC 9(3)    VALUE 001.
        01 WS-I                 PIC 9(1)    VALUE 1.
        01 WS-J                 PIC 9(1)    VALUE 4.
+       01 WS-IND-ANIO          PIC 9(1).
+       01 WS-IND-SUC           PIC 9(1).
+       01 WS-TIM-ANIO          PIC 9(4).
+       01 WS-TIM-SUC           PIC X(03).
 
        01 FECHA-ACTUAL.
            03  FECHA-ACTUAL-AAAA      PIC 9(4).
            03  FECHA-ACTUAL-MM        PIC 9(2).
            03  FECHA-ACTUAL-DD        PIC 9(2).
 
-       01 VEC.
-           03 VEC-SUCURSALES
+       01 VEC-SUCURSALES.
+           03 VEC-SUCURSALES-ELM
                OCCURS CON-CANT-SUC TIMES
                INDEXED BY INDICE.
                05  VEC-SUCURSALES-SUCURSAL        PIC X(03).
@@ -273,16 +277,57 @@
            END-IF.
 
        PROCESO1.
-      *    DISPLAY "Proceso 1".
-
+           PERFORM GUARDAR-ANIO-REGISTRO.
            PERFORM BUSCAR-ANIO.
 
-      *    PERFORM IMPRIMIR-FILA-DETALLES.
+           PERFORM GUARDAR-SUC-REGISTRO.
+           PERFORM BUSCAR-SUCURSAL.
+
+           IF (VEC-ANIOS-ELEM(WS-IND-ANIO) = WS-TIM-ANIO)
+                  AND (VEC-SUCURSALES-ELM(WS-IND-SUC) = WS-TIM-SUC)
+
+               PERFORM GUARDAR-VALORES
+
+           END-IF.
 
            PERFORM LEER-TIMES.
 
+       GUARDAR-ANIO-REGISTRO.
+           MOVE TIM-FECHA(1:4) TO WS-TIM-ANIO.
+
+           DISPLAY WS-TIM-ANIO.
+
+       GUARDAR-SUC-REGISTRO.
+           MOVE TIM-SUCURSAL TO WS-TIM-SUC.
+
+           DISPLAY WS-TIM-SUC.
+
        BUSCAR-ANIO.
            DISPLAY "BUSCAR ANIO".
+
+           MOVE 1 TO WS-IND-ANIO.
+
+           PERFORM INC-IND-ANIO
+           UNTIL (WS-IND-ANIO > CON-CANT-ANIOS
+                  AND VEC-ANIOS-ELEM(WS-IND-ANIO) = WS-TIM-ANIO).
+
+       BUSCAR-SUCURSAL.
+           DISPLAY "BUSCAR SUCURSAL".
+
+           MOVE 1 TO WS-IND-SUC.
+
+           PERFORM INC-IND-SUC
+           UNTIL (WS-IND-SUC > CON-CANT-SUC
+                  AND VEC-SUCURSALES-ELM(WS-IND-SUC) = WS-TIM-SUC).
+
+       INC-IND-ANIO.
+           ADD 1 TO WS-IND-ANIO.
+
+       INC-IND-SUC.
+           ADD 1 TO WS-IND-SUC.
+
+       GUARDAR-VALORES.
+           DISPLAY "Guardar valores en la matriz".
 
        IMPRIMIR-FILA-DETALLES.
            MOVE "San Jose" TO DET-SUCURSAL.

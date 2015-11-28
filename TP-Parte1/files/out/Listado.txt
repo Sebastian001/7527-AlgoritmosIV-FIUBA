@@ -1,7 +1,8 @@
 Fecha 28/11/2015                                             Hoja 001
                 Listado de horas aplicadas
 
-Profesor: ABC12     Nombre: JUAN ALBERTO RODRIGUEZ
+PROFESOR INEXISTENTE
+ABC12
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
@@ -61,10 +62,12 @@ Totales por Profesor                                  45,00        1505988,30
 
 
 
+
 Fecha 28/11/2015                                             Hoja 002
                 Listado de horas aplicadas
 
-Profesor: BBB02     Nombre: ROBERTO GONZALEZ
+PROFESOR INEXISTENTE
+BBB02
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
@@ -124,10 +127,12 @@ Totales por Profesor                                  80,00          31248,80
 
 
 
+
 Fecha 28/11/2015                                             Hoja 003
                 Listado de horas aplicadas
 
-Profesor: DDD11     Nombre: JAVIER ALVAREZ
+PROFESOR INEXISTENTE
+DDD11
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
@@ -187,10 +192,12 @@ Totales por Profesor                                  60,22        1021017,40
 
 
 
+
 Fecha 28/11/2015                                             Hoja 004
                 Listado de horas aplicadas
 
-Profesor: FFF11     Nombre: MATIAS PANCLASIO
+PROFESOR INEXISTENTE
+FFF11
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
@@ -250,18 +257,21 @@ Totales por Profesor                                 120,22          35311,74
 
 
 
+
 Fecha 28/11/2015                                             Hoja 005
                 Listado de horas aplicadas
 
-Profesor: HHH11     Nombre: CARLOS DE CRISTOFARO
+PROFESOR INEXISTENTE
+HHH11
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
 01/00/0000   003      AEROBOX              99999,00    5,11         510994,89
-01/00/0000   003      FIERROS                100,11    1,11            111,12
+             003      FIERROS                100,11    1,11            111,12
                                                      ------       -----------
 Totales por fecha                                      6,22         511106,01
 Totales por Profesor                                   6,22         511106,01
+
 
 
 
@@ -379,67 +389,61 @@ Totales por Profesor                                   5,22           1913,51
 Fecha 28/11/2015                                             Hoja 007
                 Listado de horas aplicadas
 
-PROFESOR INEXISTENTE
-ÿÿÿÿÿ
-Totales por Profesor                                   0,00              0,00
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Fecha 28/11/2015                                             Hoja 008
-                Listado de horas aplicadas
-
 Total general                                                      3106585,76
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
