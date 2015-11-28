@@ -269,12 +269,20 @@
        LEER-TIMES.
            READ TIMES_FILE.
            IF FS-TIMES IS NOT EQUAL TO 00 AND 10
-               DISPLAY "ERROR AL LEER TIMES FS: " FS-SUCURSALES
+               DISPLAY "ERROR AL LEER TIMES FS: " FS-TIMES
            END-IF.
 
        PROCESO1.
       *    DISPLAY "Proceso 1".
-           PERFORM IMPRIMIR-FILA-DETALLES.
+
+           PERFORM BUSCAR-ANIO.
+
+      *    PERFORM IMPRIMIR-FILA-DETALLES.
+
+           PERFORM LEER-TIMES.
+
+       BUSCAR-ANIO.
+           DISPLAY "BUSCAR ANIO".
 
        IMPRIMIR-FILA-DETALLES.
            MOVE "San Jose" TO DET-SUCURSAL.
