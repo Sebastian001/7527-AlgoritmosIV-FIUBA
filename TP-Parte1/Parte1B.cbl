@@ -54,12 +54,18 @@
        WORKING-STORAGE SECTION.
       *-----------------------
 
-       77 FS-TIMES          PIC X(2).
-       77 FS-SUCURSALES     PIC X(2).
+       77 FS-TIMES             PIC X(2).
+       77 FS-SUCURSALES        PIC X(2).
+       77 TOT-GRAL             PIC 9999999999V99.
 
-       77 TOT-GRAL          PIC 9999999999V99.
+       78 CON-EOF                          VALUE 10.
+       78 CON-CANT-ANIOS                   VALUE 5.
+       78 CON-CANT-SUC                     VALUE 3.
+       78 CON-TOT-MENSUAL                  VALUE 12.
 
-       01 WS-HOJA           PIC 9(3)    VALUE 001.
+       01 WS-HOJA              PIC 9(3)    VALUE 001.
+       01 WS-I                 PIC 9(1)    VALUE 1.
+       01 WS-J                 PIC 9(1)    VALUE 4.
 
        01 FECHA-ACTUAL.
            03  FECHA-ACTUAL-AAAA      PIC 9(4).
@@ -68,31 +74,31 @@
 
        01 VEC.
            03 VEC-SUCURSALES
-               OCCURS 3 TIMES
+               OCCURS CON-CANT-SUC TIMES
                INDEXED BY INDICE.
                05  VEC-SUCURSALES-SUCURSAL        PIC X(03).
                05  VEC-SUCURSALES-RAZON           PIC X(25).
 
        01 VEC-ANIOS.
-           03  VEC-ANIOS-ELEM
-               OCCURS 5 TIMES PIC 9(4).
+           03 VEC-ANIOS-ELEM
+              OCCURS CON-CANT-ANIOS TIMES PIC 9(4).
 
        01 VEC-TOT-MENSUAL.
-           03  VEC-TOT-MENSUAL-ELM
-               OCCURS 12 TIMES PIC 9(4).
+           03 VEC-TOT-MENSUAL-ELM
+              OCCURS CON-TOT-MENSUAL TIMES PIC 9(4).
 
        01 ENCABEZADO1.
            03 FILLER           PIC X(5)    VALUE "Fecha".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 FECHA-DD         PIC 9(2).
+           03 ENC-FECHA-DD     PIC 9(2).
            03 FILLER           PIC X(1)    VALUE "/".
-           03 FECHA-MM         PIC 9(2).
+           03 ENC-FECHA-MM     PIC 9(2).
            03 FILLER           PIC X(1)    VALUE "/".
-           03 FECHA-AAAA       PIC 9(4).
-           03 FILLER           PIC X(52)   VALUE SPACES.
+           03 ENC-FECHA-AAAA   PIC 9(4).
+           03 FILLER           PIC X(56)   VALUE SPACES.
            03 FILLER           PIC X(4)    VALUE "Hoja".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 E1HOJA           PIC 9(3).
+           03 ENC-HOJA         PIC 9(3).
 
        01 ENCABEZADO2.
            03 FILLER           PIC X(10)    VALUE SPACES.
@@ -187,8 +193,8 @@
            PERFORM GENERAR-ANIOS.
            PERFORM LEER-TIMES.
 
-           PERFORM PROCESO1.
-           PERFORM ESCRIBIR-ESTADISTICAS.
+           PERFORM PROCESO1 UNTIL FS-TIMES = CON-EOF.
+           PERFORM ESCRIBIR-ARCHIVO.
 
            PERFORM CERRAR-ARCHIVOS.
            STOP RUN.
@@ -220,7 +226,7 @@
        CARGAR-SUCURSALES.
            PERFORM GUARDAR-SUCURSAL
                   VARYING INDICE FROM 1 BY 1
-                  UNTIL INDICE > 3
+                  UNTIL INDICE > CON-CANT-SUC
                   OR FS-SUCURSALES IS EQUAL TO 10.
 
        GUARDAR-SUCURSAL.
@@ -231,8 +237,12 @@
 
        IMPRIMIR-ENCABEZADO-1.
            MOVE FUNCTION CURRENT-DATE TO FECHA-ACTUAL.
-           MOVE CORRESPONDING FECHA-ACTUAL to ENCABEZADO1.
-           MOVE WS-HOJA to E1HOJA.
+
+           MOVE FECHA-ACTUAL-AAAA TO ENC-FECHA-AAAA.
+           MOVE FECHA-ACTUAL-MM TO ENC-FECHA-MM.
+           MOVE FECHA-ACTUAL-DD TO ENC-FECHA-DD.
+           MOVE WS-HOJA TO ENC-HOJA.
+
            DISPLAY ENCABEZADO1.
 
        IMPRIMIR-ENCABEZADO-2.
@@ -247,7 +257,14 @@
            DISPLAY LINEA-DETALLES.
 
        GENERAR-ANIOS.
-      *     DISPLAY "Generar anios".
+           PERFORM CARGAR-ANIO UNTIL (WS-I > CON-CANT-SUC).
+
+       CARGAR-ANIO.
+           SUBTRACT WS-J FROM FECHA-ACTUAL-AAAA.
+           MOVE WS-J TO VEC-ANIOS-ELEM(WS-I).
+
+           ADD 1 TO WS-I.
+           SUBTRACT 1 FROM WS-J.
 
        LEER-TIMES.
            READ TIMES_FILE.
@@ -268,7 +285,7 @@
 
            DISPLAY FILA-DETALLES.
 
-       ESCRIBIR-ESTADISTICAS.
+       ESCRIBIR-ARCHIVO.
       *    DISPLAY "Escribir en Estadisticas".
 
        CERRAR-ARCHIVOS.
