@@ -13,15 +13,20 @@
        INPUT-OUTPUT SECTION.
       *-----------------------
        FILE-CONTROL.
-           SELECT SUCURSALES_FILE
+           SELECT SUCURSALES-FILE
            ASSIGN TO "../files/in/Sucursales.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-SUCURSALES.
 
-           SELECT TIMES_FILE
+           SELECT TIMES-FILE
            ASSIGN TO "../files/out/Times.dat"
            ORGANIZATION IS LINE SEQUENTIAL
            FILE STATUS IS FS-TIMES.
+
+           SELECT ESTADISTICAS-FILE
+           ASSIGN TO "../files/out/Estadisticas.txt"
+           ORGANIZATION IS LINE SEQUENTIAL
+           FILE STATUS IS FS-ESTADISTICAS.
 
        DATA DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -31,7 +36,7 @@
       *-------------------------------*
       *- SUCURSALES FILE DESCRIPTION -*
       *-------------------------------*
-       FD SUCURSALES_FILE LABEL RECORD STANDARD.
+       FD SUCURSALES-FILE LABEL RECORD STANDARD.
        01 REG-SUCURSALES.
            03 SUC-SUCURSAL      PIC X(03).
            03 SUC-RAZON         PIC X(25).
@@ -42,7 +47,7 @@
       *--------------------------*
       *- TIMES FILE DESCRIPTION -*
       *--------------------------*
-       FD TIMES_FILE LABEL RECORD STANDARD.
+       FD TIMES-FILE LABEL RECORD STANDARD.
        01 REG-TIMES.
            03 CLAVE-TIMES.
               05 CLAVE-TIMES-SUC.
@@ -53,11 +58,18 @@
            03 TIM-TIPCLASE                 PIC X(04).
            03 TIM-HORAS                    PIC 9(2)V99.
 
+      *---------------------------------*
+      *- ESTADISTICAS FILE DESCRIPTION -*
+      *---------------------------------*
+       FD ESTADISTICAS-FILE LABEL RECORD OMITTED.
+       01 REG-ESTADISTICAS                 PIC X(80).
+
        WORKING-STORAGE SECTION.
       *-----------------------
 
        77 FS-TIMES             PIC X(2).
        77 FS-SUCURSALES        PIC X(2).
+       77 FS-ESTADISTICAS      PIC X(2).
 
        78 CON-EOF                          VALUE 10.
        78 CON-CANT-ANIOS                   VALUE 5.
@@ -231,20 +243,27 @@
            MOVE 0 TO WS-TOT-GRAL.
 
        ABRIR-ARCHIVOS.
-           OPEN INPUT SUCURSALES_FILE.
+           OPEN INPUT SUCURSALES-FILE.
            IF FS-SUCURSALES IS NOT EQUAL TO 00
                DISPLAY "ERROR AL ABRIR SUCURSALES FS: " FS-SUCURSALES
                STOP RUN
            END-IF.
 
-           OPEN INPUT TIMES_FILE.
+           OPEN INPUT TIMES-FILE.
            IF FS-TIMES IS NOT EQUAL TO 00
                DISPLAY "ERROR AL ABRIR TIMES FS: " FS-TIMES
                STOP RUN
            END-IF.
 
+           OPEN OUTPUT ESTADISTICAS-FILE.
+           IF FS-ESTADISTICAS IS NOT EQUAL TO 00
+               DISPLAY "ERROR AL ABRIR ESTADISTICAS FS: "
+                       FS-ESTADISTICAS
+               STOP RUN
+           END-IF.
+
        LEER-SUCURSALES.
-           READ SUCURSALES_FILE.
+           READ SUCURSALES-FILE.
            IF FS-SUCURSALES IS NOT EQUAL TO 00 AND 10
                DISPLAY "ERROR AL LEER SUCURSALES FS: " FS-SUCURSALES
            END-IF.
@@ -274,15 +293,26 @@
            DISPLAY LINEA-DETALLES.
            DISPLAY ENCABEZADO1.
 
+           WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
+           WRITE REG-ESTADISTICAS FROM ENCABEZADO1.
+
        IMPRIMIR-ENCABEZADO-2.
            DISPLAY ENCABEZADO3.
            DISPLAY ENCABEZADO2.
            DISPLAY ENCABEZADO3.
 
+           WRITE REG-ESTADISTICAS FROM ENCABEZADO3.
+           WRITE REG-ESTADISTICAS FROM ENCABEZADO2.
+           WRITE REG-ESTADISTICAS FROM ENCABEZADO3.
+
        IMPRIMIR-ENCABEZADO-DETALLES.
            DISPLAY LINEA-DETALLES.
            DISPLAY ENCABEZAD-DETALLES.
            DISPLAY LINEA-DETALLES.
+
+           WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
+           WRITE REG-ESTADISTICAS FROM ENCABEZAD-DETALLES.
+           WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
 
        GENERAR-ANIOS.
            MOVE 1 TO WS-I.
@@ -300,7 +330,7 @@
            SUBTRACT 1 FROM WS-J.
 
        LEER-TIMES.
-           READ TIMES_FILE.
+           READ TIMES-FILE.
            IF FS-TIMES IS NOT EQUAL TO 00 AND 10
                DISPLAY "ERROR AL LEER TIMES FS: " FS-TIMES
            END-IF.
@@ -372,9 +402,7 @@
            ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES) TO WS-TOT-GRAL.
 
        SUCURSAL-NO-ENCONTRADA.
-           DISPLAY "- Sucursal no enconetrada"
-           with background-color 4
-                foreground-color 2.
+           DISPLAY "- Sucursal no enconetrada".
 
        ANIO-NO-ENCONTRADO.
            DISPLAY "- Anio no encontrado".
@@ -383,8 +411,6 @@
            DISPLAY "-- No hay resultados".
 
        ESCRIBIR-ARCHIVO.
-      *     DISPLAY "[ Escribir en Estadisticas ]".
-
            MOVE 1 TO WS-I2.
 
            PERFORM IMPRIMIR-FILAS-SUCURSAL UNTIL (WS-I2 > CON-CANT-SUC).
@@ -399,10 +425,8 @@
            ADD 1 TO WS-I2.
 
        IMRPIMIR-COLUMNAS-SUCURSAL.
-      *     DISPLAY "Imprimir columnas suc".
-
+           *> Popular tabla de detalles
            MOVE VEC-ANIOS-ELEM(WS-I2) TO DET-ANIO.
-
            MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 1)  TO DET-ENE.
            MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 2)  TO DET-FEB.
            MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 3)  TO DET-MAR.
@@ -417,13 +441,16 @@
            MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 12) TO DET-DIC.
            MOVE MAT-TOT-SUC-HORAS(WS-I2, WS-J2)   TO DET-TOTAL.
 
+           *> Mostrar fila por pantalla
            DISPLAY FILA-DETALLES.
+
+           *> Imprimir fila en archivo
+           WRITE REG-ESTADISTICAS FROM FILA-DETALLES.
 
            ADD 1 TO WS-J2.
 
        IMPRIMIR-TOTALES.
-           DISPLAY LINEA-DETALLES.
-
+           *> Popular tabla de detalles
            MOVE "TOTALES" TO DET-SUCURSAL.
            MOVE "    " TO DET-ANIO.
            MOVE VEC-TOT-MENSUAL-ELM(1)  TO DET-ENE.
@@ -440,11 +467,19 @@
            MOVE VEC-TOT-MENSUAL-ELM(12) TO DET-DIC.
            MOVE WS-TOT-GRAL TO DET-TOTAL.
 
+           *> Mostrar tabla en pantalla
+           DISPLAY LINEA-DETALLES.
            DISPLAY FILA-DETALLES.
            DISPLAY LINEA-DETALLES.
 
+           *> Imprimir tabla en archivo
+           WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
+           WRITE REG-ESTADISTICAS FROM FILA-DETALLES.
+           WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
+
        CERRAR-ARCHIVOS.
-           CLOSE SUCURSALES_FILE.
-           CLOSE TIMES_FILE.
+           CLOSE SUCURSALES-FILE.
+           CLOSE TIMES-FILE.
+           CLOSE ESTADISTICAS-FILE.
 
        END PROGRAM "TP_PARTE_1B".
