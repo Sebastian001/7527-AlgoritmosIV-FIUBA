@@ -75,9 +75,8 @@
        78 CON-CANT-ANIOS                   VALUE 5.
        78 CON-CANT-SUC                     VALUE 3.
        78 CON-CANT-MESES                   VALUE 12.
-       78 CON-TOT-MENSUAL                  VALUE 12.
 
-       01 WS-TOT-GRAL          PIC 9999999999V99.
+       01 WS-TOT-GRAL          PIC 9(10)V99.
        01 WS-ANIO-ACTUAL       PIC 9(4).
        01 WS-HOJA              PIC 9(3)    VALUE 001.
        01 WS-I                 PIC 9(1).
@@ -110,12 +109,12 @@
 
        01 VEC-TOT-MENSUAL.
            03 VEC-TOT-MENSUAL-ELM
-              OCCURS CON-TOT-MENSUAL TIMES        PIC 9(4).
+              OCCURS CON-CANT-MESES TIMES         PIC 9(4).
 
        01 MAT-DATOS.
            03 MAT-DATOS-SUC OCCURS CON-CANT-SUC TIMES.
               05 MAT-DATOS-ANIO OCCURS CON-CANT-ANIOS TIMES.
-                 07 MAT-DATOS-MES OCCURS CON-TOT-MENSUAL TIMES.
+                 07 MAT-DATOS-MES OCCURS CON-CANT-MESES TIMES.
                     09 MAT-DATOS-HORAS            PIC 9(2)V99.
 
        01 MAT-TOT-SUC.
@@ -356,11 +355,17 @@
        GUARDAR-ANIO-REGISTRO.
            MOVE TIM-FECHA(1:4) TO WS-TIM-ANIO.
 
+           DISPLAY "- Guardar Anio " WS-TIM-ANIO.
+
        GUARDAR-MES-REGISTRO.
            MOVE TIM-FECHA(5:2) TO WS-TIM-MES.
 
+           DISPLAY "- Guardar Mes " WS-TIM-MES.
+
        GUARDAR-SUC-REGISTRO.
            MOVE TIM-SUCURSAL TO WS-TIM-SUC.
+
+           DISPLAY "- Guardar Sucursal " WS-TIM-SUC.
 
        BUSCAR-ANIO.
            DISPLAY "[ Buscar anio - " WS-TIM-ANIO " ]".
@@ -394,6 +399,9 @@
            ADD TIM-HORAS
            TO MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-SUC, WS-TIM-MES).
 
+           DISPLAY "- Dato Guardado "
+           MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-SUC, WS-TIM-MES).
+
            ADD TIM-HORAS TO VEC-TOT-MENSUAL-ELM(WS-TIM-MES).
 
            ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES)
@@ -413,11 +421,14 @@
        ESCRIBIR-ARCHIVO.
            MOVE 1 TO WS-I2.
 
+           *> Recorrer por Sucursal
            PERFORM IMPRIMIR-FILAS-SUCURSAL UNTIL (WS-I2 > CON-CANT-SUC).
 
        IMPRIMIR-FILAS-SUCURSAL.
+           *> Mostrar nombre Sucursal en tabla
            MOVE VEC-SUCURSALES-RAZON(WS-I2) TO DET-SUCURSAL.
 
+           *> Recorrer por Anio
            MOVE 1 TO WS-J2.
            PERFORM IMRPIMIR-COLUMNAS-SUCURSAL
                   UNTIL (WS-J2 > CON-CANT-ANIOS).
@@ -425,8 +436,10 @@
            ADD 1 TO WS-I2.
 
        IMRPIMIR-COLUMNAS-SUCURSAL.
-           *> Popular tabla de detalles
-           MOVE VEC-ANIOS-ELEM(WS-I2) TO DET-ANIO.
+           *> Mostrar anio en fila
+           MOVE VEC-ANIOS-ELEM(WS-J2) TO DET-ANIO.
+
+           *> Mostrar horas de cada mes en fila
            MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 1)  TO DET-ENE.
            MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 2)  TO DET-FEB.
            MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 3)  TO DET-MAR.
