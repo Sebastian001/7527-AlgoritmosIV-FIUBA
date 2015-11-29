@@ -56,19 +56,20 @@
 
        77 FS-TIMES             PIC X(2).
        77 FS-SUCURSALES        PIC X(2).
-       77 TOT-GRAL             PIC 9999999999V99.
 
        78 CON-EOF                          VALUE 10.
        78 CON-CANT-ANIOS                   VALUE 5.
        78 CON-CANT-SUC                     VALUE 3.
        78 CON-TOT-MENSUAL                  VALUE 12.
 
+       01 WS-TOT-GRAL          PIC 9999999999V99.
        01 WS-HOJA              PIC 9(3)    VALUE 001.
        01 WS-I                 PIC 9(1)    VALUE 1.
        01 WS-J                 PIC 9(1)    VALUE 4.
        01 WS-IND-ANIO          PIC 9(1).
        01 WS-IND-SUC           PIC 9(1).
        01 WS-TIM-ANIO          PIC 9(4).
+       01 WS-TIM-MES           PIC 9(2).
        01 WS-TIM-SUC           PIC X(03).
 
        01 FECHA-ACTUAL.
@@ -91,6 +92,17 @@
            03 VEC-TOT-MENSUAL-ELM
               OCCURS CON-TOT-MENSUAL TIMES PIC 9(4).
 
+       01 MAT-DATOS.
+           03 MAT-DATOS-SUC OCCURS CON-CANT-SUC TIMES.
+              05 MAT-DATOS-ANIO OCCURS CON-CANT-ANIOS TIMES.
+                 07 MAT-DATOS-MES OCCURS CON-TOT-MENSUAL TIMES.
+                    09 MAT-DATOS-HORAS            PIC 9(2)V99.
+
+       01 MAT-TOT-SUC.
+           03 MAT-TOT-SUC-SUC OCCURS CON-CANT-SUC TIMES.
+              05 MAT-TOT-SUC-ANIO OCCURS CON-CANT-ANIOS TIMES.
+                 07 MAT-TOT-SUC-HORAS             PIC 9(2)V99.
+
        01 ENCABEZADO1.
            03 FILLER           PIC X(5)    VALUE "Fecha".
            03 FILLER           PIC X(1)    VALUE SPACES.
@@ -105,12 +117,12 @@
            03 ENC-HOJA         PIC 9(3).
 
        01 ENCABEZADO2.
-           03 FILLER           PIC X(10)    VALUE SPACES.
-           03 ENC-TITULO       PIC X(56)    VALUE
+           03 FILLER           PIC X(10)   VALUE SPACES.
+           03 ENC-TITULO       PIC X(56)   VALUE
            "Listado de Estadistico de Horas aplicadas por anio y mes".
-           03 FILLER           PIC X(10)    VALUE SPACES.
+           03 FILLER           PIC X(10)   VALUE SPACES.
 
-       01 ENCABEZADO3          PIC X(80)    VALUE ALL SPACES.
+       01 ENCABEZADO3          PIC X(80)   VALUE ALL SPACES.
 
        01 LINEA-DETALLES.
            03 FILLER           PIC X(80)   VALUE ALL "-".
@@ -206,7 +218,7 @@
       *- FIN LLAMADO A PROCEDIMIENTOS
 
        INICIALIZAR.
-           MOVE 0 TO TOT-GRAL.
+           MOVE 0 TO WS-TOT-GRAL.
 
        ABRIR-ARCHIVOS.
            OPEN INPUT SUCURSALES_FILE.
@@ -283,14 +295,13 @@
            PERFORM GUARDAR-SUC-REGISTRO.
            PERFORM BUSCAR-SUCURSAL.
 
+           PERFORM GUARDAR-MES-REGISTRO.
+
            IF (VEC-ANIOS-ELEM(WS-IND-ANIO) = WS-TIM-ANIO)
-                  AND (VEC-SUCURSALES-SUCURSAL(WS-IND-SUC) = WS-TIM-SUC)
-
+               AND (VEC-SUCURSALES-SUCURSAL(WS-IND-SUC) = WS-TIM-SUC)
                PERFORM GUARDAR-VALORES
-
            ELSE
-               DISPLAY "NO encontrado"
-
+               PERFORM NO-RESULTADOS
            END-IF.
 
            PERFORM LEER-TIMES.
@@ -298,12 +309,11 @@
        GUARDAR-ANIO-REGISTRO.
            MOVE TIM-FECHA(1:4) TO WS-TIM-ANIO.
 
-           DISPLAY WS-TIM-ANIO.
+       GUARDAR-MES-REGISTRO.
+           MOVE TIM-FECHA(5:2) TO WS-TIM-MES.
 
        GUARDAR-SUC-REGISTRO.
            MOVE TIM-SUCURSAL TO WS-TIM-SUC.
-
-           DISPLAY WS-TIM-SUC.
 
        BUSCAR-ANIO.
            DISPLAY "BUSCAR ANIO".
@@ -317,23 +327,37 @@
        BUSCAR-SUCURSAL.
            DISPLAY "BUSCAR SUCURSAL".
 
-           MOVE 1 TO WS-IND-SUC.
-
-           PERFORM INC-IND-SUC
-           VARYING INDICE FROM 1 BY 1
-           UNTIL (WS-IND-SUC > CON-CANT-SUC
-                  AND VEC-SUCURSALES-SUCURSAL(WS-IND-SUC) = WS-TIM-SUC).
+           SET INDICE TO 1.
+           SEARCH VEC-SUCURSALES-ELM
+           AT END PERFORM SUCURSAL-NO-ENCONTRADA
+           WHEN VEC-SUCURSALES-SUCURSAL(INDICE) IS EQUAL TO WS-TIM-SUC
+               MOVE INDICE TO WS-IND-SUC
+           END-SEARCH.
 
        INC-IND-ANIO.
            ADD 1 TO WS-IND-ANIO.
 
-       INC-IND-SUC.
-           DISPLAY "INCREMENTAR SUC " WS-IND-SUC.
-
-           ADD 1 TO WS-IND-SUC.
+           DISPLAY WS-IND-ANIO.
 
        GUARDAR-VALORES.
            DISPLAY "Guardar valores en la matriz".
+
+           ADD TIM-HORAS
+           TO MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-SUC, WS-TIM-MES).
+
+           ADD TIM-HORAS TO VEC-TOT-MENSUAL-ELM(WS-TIM-MES).
+
+           ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES)
+           TO MAT-TOT-SUC-HORAS(WS-IND-SUC, WS-IND-ANIO).
+
+           ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES) TO WS-TOT-GRAL.
+
+
+       SUCURSAL-NO-ENCONTRADA.
+           DISPLAY "Sucursal no enconetrada".
+
+       NO-RESULTADOS.
+           DISPLAY "No hay resultados".
 
        IMPRIMIR-FILA-DETALLES.
            MOVE "San Jose" TO DET-SUCURSAL.
