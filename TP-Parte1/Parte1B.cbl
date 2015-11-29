@@ -63,9 +63,10 @@
        78 CON-TOT-MENSUAL                  VALUE 12.
 
        01 WS-TOT-GRAL          PIC 9999999999V99.
+       01 WS-ANIO-ACTUAL       PIC 9(4).
        01 WS-HOJA              PIC 9(3)    VALUE 001.
-       01 WS-I                 PIC 9(1)    VALUE 1.
-       01 WS-J                 PIC 9(1)    VALUE 4.
+       01 WS-I                 PIC 9(1).
+       01 WS-J                 PIC 9(1).
        01 WS-IND-ANIO          PIC 9(1).
        01 WS-IND-SUC           PIC 9(1).
        01 WS-TIM-ANIO          PIC 9(4).
@@ -86,11 +87,12 @@
 
        01 VEC-ANIOS.
            03 VEC-ANIOS-ELEM
-              OCCURS CON-CANT-ANIOS TIMES PIC 9(4).
+              OCCURS CON-CANT-ANIOS TIMES
+              INDEXED BY INDICE2                  PIC 9(4).
 
        01 VEC-TOT-MENSUAL.
            03 VEC-TOT-MENSUAL-ELM
-              OCCURS CON-TOT-MENSUAL TIMES PIC 9(4).
+              OCCURS CON-TOT-MENSUAL TIMES        PIC 9(4).
 
        01 MAT-DATOS.
            03 MAT-DATOS-SUC OCCURS CON-CANT-SUC TIMES.
@@ -273,11 +275,16 @@
            DISPLAY LINEA-DETALLES.
 
        GENERAR-ANIOS.
-           PERFORM CARGAR-ANIO UNTIL (WS-I > CON-CANT-SUC).
+           MOVE 1 TO WS-I.
+           MOVE 4 TO WS-J.
+
+           PERFORM CARGAR-ANIO UNTIL (WS-I > CON-CANT-ANIOS).
 
        CARGAR-ANIO.
-           SUBTRACT WS-J FROM FECHA-ACTUAL-AAAA.
-           MOVE WS-J TO VEC-ANIOS-ELEM(WS-I).
+           MOVE FECHA-ACTUAL-AAAA TO WS-ANIO-ACTUAL.
+
+           SUBTRACT WS-J FROM WS-ANIO-ACTUAL.
+           MOVE WS-ANIO-ACTUAL TO VEC-ANIOS-ELEM(WS-I).
 
            ADD 1 TO WS-I.
            SUBTRACT 1 FROM WS-J.
@@ -316,28 +323,30 @@
            MOVE TIM-SUCURSAL TO WS-TIM-SUC.
 
        BUSCAR-ANIO.
-           DISPLAY "BUSCAR ANIO".
+           DISPLAY "[ Buscar anio - " WS-TIM-ANIO " ]".
 
-           MOVE 1 TO WS-IND-ANIO.
+           SET INDICE2 TO 1.
+           SEARCH VEC-ANIOS-ELEM
+           AT END PERFORM ANIO-NO-ENCONTRADO
+           WHEN VEC-ANIOS-ELEM(INDICE2) IS EQUAL TO WS-TIM-ANIO
 
-           PERFORM INC-IND-ANIO
-           UNTIL (WS-IND-ANIO > CON-CANT-ANIOS
-                  AND VEC-ANIOS-ELEM(WS-IND-ANIO) = WS-TIM-ANIO).
+               DISPLAY "- Anio encontrado"
+
+               MOVE INDICE2 TO WS-IND-ANIO
+           END-SEARCH.
 
        BUSCAR-SUCURSAL.
-           DISPLAY "BUSCAR SUCURSAL".
+           DISPLAY "[ Buscar sucursal: " WS-TIM-SUC " ]".
 
            SET INDICE TO 1.
            SEARCH VEC-SUCURSALES-ELM
            AT END PERFORM SUCURSAL-NO-ENCONTRADA
            WHEN VEC-SUCURSALES-SUCURSAL(INDICE) IS EQUAL TO WS-TIM-SUC
+
+               DISPLAY "- Sucursal encontrada"
+
                MOVE INDICE TO WS-IND-SUC
            END-SEARCH.
-
-       INC-IND-ANIO.
-           ADD 1 TO WS-IND-ANIO.
-
-           DISPLAY WS-IND-ANIO.
 
        GUARDAR-VALORES.
            DISPLAY "Guardar valores en la matriz".
@@ -352,12 +361,16 @@
 
            ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES) TO WS-TOT-GRAL.
 
-
        SUCURSAL-NO-ENCONTRADA.
-           DISPLAY "Sucursal no enconetrada".
+           DISPLAY "- Sucursal no enconetrada"
+           with background-color 4
+                foreground-color 2.
+
+       ANIO-NO-ENCONTRADO.
+           DISPLAY "- Anio no encontrado".
 
        NO-RESULTADOS.
-           DISPLAY "No hay resultados".
+           DISPLAY "-- No hay resultados".
 
        IMPRIMIR-FILA-DETALLES.
            MOVE "San Jose" TO DET-SUCURSAL.
