@@ -7,6 +7,8 @@
        ENVIRONMENT DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
        CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
       *-----------------------
        INPUT-OUTPUT SECTION.
       *-----------------------
@@ -60,6 +62,7 @@
        78 CON-EOF                          VALUE 10.
        78 CON-CANT-ANIOS                   VALUE 5.
        78 CON-CANT-SUC                     VALUE 3.
+       78 CON-CANT-MESES                   VALUE 12.
        78 CON-TOT-MENSUAL                  VALUE 12.
 
        01 WS-TOT-GRAL          PIC 9999999999V99.
@@ -67,6 +70,9 @@
        01 WS-HOJA              PIC 9(3)    VALUE 001.
        01 WS-I                 PIC 9(1).
        01 WS-J                 PIC 9(1).
+       01 WS-I2                PIC 9(1).
+       01 WS-J2                PIC 9(1).
+       01 WS-K                 PIC 9(2).
        01 WS-IND-ANIO          PIC 9(1).
        01 WS-IND-SUC           PIC 9(1).
        01 WS-TIM-ANIO          PIC 9(4).
@@ -203,16 +209,18 @@
            PERFORM LEER-SUCURSALES.
            PERFORM CARGAR-SUCURSALES.
 
-           PERFORM IMPRIMIR-ENCABEZADO-1.
-           PERFORM IMPRIMIR-ENCABEZADO-2.
-           PERFORM IMPRIMIR-ENCABEZADO-3.
-           PERFORM IMPRIMIR-ENCABEZADO-DETALLES.
+           PERFORM CARGAR-FECHA.
 
            PERFORM GENERAR-ANIOS.
            PERFORM LEER-TIMES.
 
            PERFORM PROCESO1 UNTIL FS-TIMES = CON-EOF.
+
+           PERFORM IMPRIMIR-ENCABEZADO-1.
+           PERFORM IMPRIMIR-ENCABEZADO-2.
+           PERFORM IMPRIMIR-ENCABEZADO-DETALLES.
            PERFORM ESCRIBIR-ARCHIVO.
+           PERFORM IMPRIMIR-TOTALES.
 
            PERFORM CERRAR-ARCHIVOS.
            STOP RUN.
@@ -253,20 +261,22 @@
 
            PERFORM LEER-SUCURSALES.
 
-       IMPRIMIR-ENCABEZADO-1.
+       CARGAR-FECHA.
            MOVE FUNCTION CURRENT-DATE TO FECHA-ACTUAL.
 
            MOVE FECHA-ACTUAL-AAAA TO ENC-FECHA-AAAA.
            MOVE FECHA-ACTUAL-MM TO ENC-FECHA-MM.
            MOVE FECHA-ACTUAL-DD TO ENC-FECHA-DD.
+
+       IMPRIMIR-ENCABEZADO-1.
            MOVE WS-HOJA TO ENC-HOJA.
 
+           DISPLAY LINEA-DETALLES.
            DISPLAY ENCABEZADO1.
 
        IMPRIMIR-ENCABEZADO-2.
+           DISPLAY ENCABEZADO3.
            DISPLAY ENCABEZADO2.
-
-       IMPRIMIR-ENCABEZADO-3.
            DISPLAY ENCABEZADO3.
 
        IMPRIMIR-ENCABEZADO-DETALLES.
@@ -349,7 +359,7 @@
            END-SEARCH.
 
        GUARDAR-VALORES.
-           DISPLAY "Guardar valores en la matriz".
+           DISPLAY "[ Guardar valores en la matriz ]".
 
            ADD TIM-HORAS
            TO MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-SUC, WS-TIM-MES).
@@ -372,17 +382,66 @@
        NO-RESULTADOS.
            DISPLAY "-- No hay resultados".
 
-       IMPRIMIR-FILA-DETALLES.
-           MOVE "San Jose" TO DET-SUCURSAL.
-           MOVE "2014" TO DET-ANIO.
-           MOVE "123" TO DET-ENE.
-           MOVE "456" TO DET-FEB.
-           MOVE "789" TO DET-MAR.
+       ESCRIBIR-ARCHIVO.
+      *     DISPLAY "[ Escribir en Estadisticas ]".
+
+           MOVE 1 TO WS-I2.
+
+           PERFORM IMPRIMIR-FILAS-SUCURSAL UNTIL (WS-I2 > CON-CANT-SUC).
+
+       IMPRIMIR-FILAS-SUCURSAL.
+           MOVE VEC-SUCURSALES-RAZON(WS-I2) TO DET-SUCURSAL.
+
+           MOVE 1 TO WS-J2.
+           PERFORM IMRPIMIR-COLUMNAS-SUCURSAL
+                  UNTIL (WS-J2 > CON-CANT-ANIOS).
+
+           ADD 1 TO WS-I2.
+
+       IMRPIMIR-COLUMNAS-SUCURSAL.
+      *     DISPLAY "Imprimir columnas suc".
+
+           MOVE VEC-ANIOS-ELEM(WS-I2) TO DET-ANIO.
+
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 1)  TO DET-ENE.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 2)  TO DET-FEB.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 3)  TO DET-MAR.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 4)  TO DET-ABR.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 5)  TO DET-MAY.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 6)  TO DET-JUN.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 7)  TO DET-JUL.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 8)  TO DET-AGO.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 9)  TO DET-SEP.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 10) TO DET-OCT.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 11) TO DET-NOV.
+           MOVE MAT-DATOS-HORAS(WS-I2, WS-J2, 12) TO DET-DIC.
+           MOVE MAT-TOT-SUC-HORAS(WS-I2, WS-J2)   TO DET-TOTAL.
 
            DISPLAY FILA-DETALLES.
 
-       ESCRIBIR-ARCHIVO.
-      *    DISPLAY "Escribir en Estadisticas".
+           ADD 1 TO WS-J2.
+
+       IMPRIMIR-TOTALES.
+           DISPLAY LINEA-DETALLES.
+
+           MOVE "TOTALES" TO DET-SUCURSAL.
+           MOVE "    " TO DET-ANIO.
+           MOVE VEC-TOT-MENSUAL-ELM(1)  TO DET-ENE.
+           MOVE VEC-TOT-MENSUAL-ELM(2)  TO DET-FEB.
+           MOVE VEC-TOT-MENSUAL-ELM(3)  TO DET-MAR.
+           MOVE VEC-TOT-MENSUAL-ELM(4)  TO DET-ABR.
+           MOVE VEC-TOT-MENSUAL-ELM(5)  TO DET-MAY.
+           MOVE VEC-TOT-MENSUAL-ELM(6)  TO DET-JUN.
+           MOVE VEC-TOT-MENSUAL-ELM(7)  TO DET-JUL.
+           MOVE VEC-TOT-MENSUAL-ELM(8)  TO DET-AGO.
+           MOVE VEC-TOT-MENSUAL-ELM(9)  TO DET-SEP.
+           MOVE VEC-TOT-MENSUAL-ELM(10) TO DET-OCT.
+           MOVE VEC-TOT-MENSUAL-ELM(11) TO DET-NOV.
+           MOVE VEC-TOT-MENSUAL-ELM(12) TO DET-DIC.
+           MOVE WS-TOT-GRAL TO DET-TOTAL.
+
+           DISPLAY FILA-DETALLES.
+           DISPLAY LINEA-DETALLES.
 
        CERRAR-ARCHIVOS.
            CLOSE SUCURSALES_FILE.
