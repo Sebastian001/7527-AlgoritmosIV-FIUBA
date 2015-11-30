@@ -439,6 +439,10 @@
            PERFORM IMRPIMIR-COLUMNAS-SUCURSAL
                   UNTIL (WS-J2 > CON-CANT-ANIOS).
 
+           *> Imprimir linea en blanco
+           DISPLAY ENCABEZADO3.
+           WRITE REG-ESTADISTICAS FROM ENCABEZADO3.
+
            ADD 1 TO WS-I2.
 
        IMRPIMIR-COLUMNAS-SUCURSAL.
