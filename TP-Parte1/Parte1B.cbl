@@ -292,9 +292,11 @@
        IMPRIMIR-ENCABEZADO-1.
            MOVE WS-HOJA TO ENC-HOJA.
 
+           *> Mostrar encabezado general
            DISPLAY LINEA-DETALLES.
            DISPLAY ENCABEZADO1.
 
+           *> Escribir encabezado en Estadisticas
            WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
            WRITE REG-ESTADISTICAS FROM ENCABEZADO1.
 
