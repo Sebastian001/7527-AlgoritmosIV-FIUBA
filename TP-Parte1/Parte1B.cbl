@@ -62,7 +62,7 @@
       *- ESTADISTICAS FILE DESCRIPTION -*
       *---------------------------------*
        FD ESTADISTICAS-FILE LABEL RECORD OMITTED.
-       01 REG-ESTADISTICAS                 PIC X(80).
+       01 REG-ESTADISTICAS                 PIC X(120).
 
        WORKING-STORAGE SECTION.
       *-----------------------
@@ -145,36 +145,36 @@
        01 ENCABEZADO3          PIC X(80)   VALUE ALL SPACES.
 
        01 LINEA-DETALLES.
-           03 FILLER           PIC X(80)   VALUE ALL "-".
+           03 FILLER           PIC X(105)   VALUE ALL "-".
 
        01 ENCABEZAD-DETALLES.
            03 FILLER           PIC X(19)   VALUE "Sucursal".
            03 FILLER           PIC X(2)    VALUE SPACES.
            03 ENC-ANIO         PIC X(4)    VALUE SPACES.
            03 FILLER           PIC X(2)    VALUE SPACES.
-           03 ENC-ENE          PIC X(3)    VALUE "Ene".
+           03 ENC-ENE          PIC X(5)    VALUE "Ene".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-FEB          PIC X(3)    VALUE "Feb".
+           03 ENC-FEB          PIC X(5)    VALUE "Feb".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-MAR          PIC X(3)    VALUE "Mar".
+           03 ENC-MAR          PIC X(5)    VALUE "Mar".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-ABR          PIC X(3)    VALUE "Abr".
+           03 ENC-ABR          PIC X(5)    VALUE "Abr".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-MAY          PIC X(3)    VALUE "May".
+           03 ENC-MAY          PIC X(5)    VALUE "May".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-JUN          PIC X(3)    VALUE "Jun".
+           03 ENC-JUN          PIC X(5)    VALUE "Jun".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-JUL          PIC X(3)    VALUE "Jul".
+           03 ENC-JUL          PIC X(5)    VALUE "Jul".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-AGO          PIC X(3)    VALUE "Ago".
+           03 ENC-AGO          PIC X(5)    VALUE "Ago".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-SEP          PIC X(3)    VALUE "Sep".
+           03 ENC-SEP          PIC X(5)    VALUE "Sep".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-OCT          PIC X(3)    VALUE "Oct".
+           03 ENC-OCT          PIC X(5)    VALUE "Oct".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-NOV          PIC X(3)    VALUE "Nov".
+           03 ENC-NOV          PIC X(5)    VALUE "Nov".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-DIC          PIC X(3)    VALUE "Dic".
+           03 ENC-DIC          PIC X(5)    VALUE "Dic".
            03 FILLER           PIC X(1)    VALUE SPACES.
            03 ENC-TOTAL        PIC X(5)    VALUE "Total".
 
@@ -183,31 +183,31 @@
            03 FILLER           PIC X(2)    VALUE SPACES.
            03 DET-ANIO         PIC 9(4).
            03 FILLER           PIC X(2)    VALUE SPACES.
-           03 DET-ENE          PIC 9(3).
+           03 DET-ENE          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-FEB          PIC 9(3).
+           03 DET-FEB          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-MAR          PIC 9(3).
+           03 DET-MAR          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-ABR          PIC 9(3).
+           03 DET-ABR          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-MAY          PIC 9(3).
+           03 DET-MAY          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-JUN          PIC 9(3).
+           03 DET-JUN          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-JUL          PIC 9(3).
+           03 DET-JUL          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-AGO          PIC 9(3).
+           03 DET-AGO          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-SEP          PIC 9(3).
+           03 DET-SEP          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-OCT          PIC 9(3).
+           03 DET-OCT          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-NOV          PIC 9(3).
+           03 DET-NOV          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-DIC          PIC 9(3).
+           03 DET-DIC          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-TOTAL        PIC 9(4).
+           03 DET-TOTAL        PIC 9(3),9.
 
        PROCEDURE DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
