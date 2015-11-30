@@ -225,6 +225,7 @@
            PERFORM GENERAR-ANIOS.
            PERFORM LEER-TIMES.
 
+           *> Procesar hasta fin de archivo Times
            PERFORM PROCESO1 UNTIL FS-TIMES = CON-EOF.
 
            PERFORM IMPRIMIR-ENCABEZADO-1.
@@ -282,6 +283,7 @@
        CARGAR-FECHA.
            MOVE FUNCTION CURRENT-DATE TO FECHA-ACTUAL.
 
+           *> Inicializar fecha de Tabla
            MOVE FECHA-ACTUAL-AAAA TO ENC-FECHA-AAAA.
            MOVE FECHA-ACTUAL-MM TO ENC-FECHA-MM.
            MOVE FECHA-ACTUAL-DD TO ENC-FECHA-DD.
@@ -296,19 +298,23 @@
            WRITE REG-ESTADISTICAS FROM ENCABEZADO1.
 
        IMPRIMIR-ENCABEZADO-2.
+           *> Mostrar encabezados
            DISPLAY ENCABEZADO3.
            DISPLAY ENCABEZADO2.
            DISPLAY ENCABEZADO3.
 
+           *> Escribir encabezados en Estadisticas
            WRITE REG-ESTADISTICAS FROM ENCABEZADO3.
            WRITE REG-ESTADISTICAS FROM ENCABEZADO2.
            WRITE REG-ESTADISTICAS FROM ENCABEZADO3.
 
        IMPRIMIR-ENCABEZADO-DETALLES.
+           *> Mostrar encabezados
            DISPLAY LINEA-DETALLES.
            DISPLAY ENCABEZAD-DETALLES.
            DISPLAY LINEA-DETALLES.
 
+           *> Escribir encabezados en Estadisticas
            WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
            WRITE REG-ESTADISTICAS FROM ENCABEZAD-DETALLES.
            WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
@@ -343,6 +349,7 @@
 
            PERFORM GUARDAR-MES-REGISTRO.
 
+           *> Si el registro coincide con anio y Sucursal
            IF (VEC-ANIOS-ELEM(WS-IND-ANIO) = WS-TIM-ANIO)
                AND (VEC-SUCURSALES-SUCURSAL(WS-IND-SUC) = WS-TIM-SUC)
                PERFORM GUARDAR-VALORES
