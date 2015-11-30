@@ -89,6 +89,7 @@
        01 WS-TIM-ANIO          PIC 9(4).
        01 WS-TIM-MES           PIC 9(2).
        01 WS-TIM-SUC           PIC X(03).
+       01 WS-SUC-FLAG          PIC 9(1).
 
        01 FECHA-ACTUAL.
            03  FECHA-ACTUAL-AAAA      PIC 9(4).
@@ -349,7 +350,7 @@
 
            PERFORM GUARDAR-MES-REGISTRO.
 
-           *> Si el registro coincide con anio y Sucursal
+           *> Si el registro coincide con Anio y Sucursal
            IF (VEC-ANIOS-ELEM(WS-IND-ANIO) = WS-TIM-ANIO)
                AND (VEC-SUCURSALES-SUCURSAL(WS-IND-SUC) = WS-TIM-SUC)
                PERFORM GUARDAR-VALORES
@@ -381,7 +382,6 @@
            SEARCH VEC-ANIOS-ELEM
            AT END PERFORM ANIO-NO-ENCONTRADO
            WHEN VEC-ANIOS-ELEM(INDICE2) IS EQUAL TO WS-TIM-ANIO
-
                DISPLAY "- Anio encontrado"
 
                MOVE INDICE2 TO WS-IND-ANIO
@@ -394,7 +394,6 @@
            SEARCH VEC-SUCURSALES-ELM
            AT END PERFORM SUCURSAL-NO-ENCONTRADA
            WHEN VEC-SUCURSALES-SUCURSAL(INDICE) IS EQUAL TO WS-TIM-SUC
-
                DISPLAY "- Sucursal encontrada"
 
                MOVE INDICE TO WS-IND-SUC
@@ -432,8 +431,8 @@
            PERFORM IMPRIMIR-FILAS-SUCURSAL UNTIL (WS-I2 > CON-CANT-SUC).
 
        IMPRIMIR-FILAS-SUCURSAL.
-           *> Mostrar nombre Sucursal en tabla
-           MOVE VEC-SUCURSALES-RAZON(WS-I2) TO DET-SUCURSAL.
+           *> Flag para nombre de Sucursal
+           MOVE 1 TO WS-SUC-FLAG.
 
            *> Recorrer por Anio
            MOVE 1 TO WS-J2.
@@ -443,6 +442,17 @@
            ADD 1 TO WS-I2.
 
        IMRPIMIR-COLUMNAS-SUCURSAL.
+           *> Mostrar nombre Sucursal en tabla
+           IF WS-SUC-FLAG = 1
+               MOVE VEC-SUCURSALES-RAZON(WS-I2) TO DET-SUCURSAL
+
+               *> Reset flag de Sucursal
+               MOVE 0 TO WS-SUC-FLAG
+           ELSE
+               *> No repetir sucursal
+               MOVE SPACES TO DET-SUCURSAL
+           END-IF.
+
            *> Mostrar anio en fila
            MOVE VEC-ANIOS-ELEM(WS-J2) TO DET-ANIO.
 
