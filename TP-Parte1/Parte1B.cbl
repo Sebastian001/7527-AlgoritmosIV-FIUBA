@@ -131,21 +131,21 @@
            03 ENC-FECHA-MM     PIC 9(2).
            03 FILLER           PIC X(1)    VALUE "/".
            03 ENC-FECHA-AAAA   PIC 9(4).
-           03 FILLER           PIC X(56)   VALUE SPACES.
+           03 FILLER           PIC X(80)   VALUE SPACES.
            03 FILLER           PIC X(4)    VALUE "Hoja".
            03 FILLER           PIC X(1)    VALUE SPACES.
            03 ENC-HOJA         PIC 9(3).
 
        01 ENCABEZADO2.
-           03 FILLER           PIC X(10)   VALUE SPACES.
+           03 FILLER           PIC X(22)   VALUE SPACES.
            03 ENC-TITULO       PIC X(56)   VALUE
-           "Listado de Estadistico de Horas aplicadas por anio y mes".
+           "Listado Estadistico de Horas aplicadas por anio y mes".
            03 FILLER           PIC X(10)   VALUE SPACES.
 
-       01 ENCABEZADO3          PIC X(80)   VALUE ALL SPACES.
+       01 ENCABEZADO3          PIC X(105)   VALUE ALL SPACES.
 
        01 LINEA-DETALLES.
-           03 FILLER           PIC X(105)   VALUE ALL "-".
+           03 FILLER           PIC X(104)   VALUE ALL "-".
 
        01 ENCABEZAD-DETALLES.
            03 FILLER           PIC X(19)   VALUE "Sucursal".
@@ -405,10 +405,10 @@
            DISPLAY "[ Guardar valores en la matriz ]".
 
            ADD TIM-HORAS
-           TO MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-SUC, WS-TIM-MES).
+           TO MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-ANIO, WS-TIM-MES).
 
            DISPLAY "- Dato Guardado "
-           MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-SUC, WS-TIM-MES).
+           MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-ANIO, WS-TIM-MES).
 
            ADD TIM-HORAS TO VEC-TOT-MENSUAL-ELM(WS-TIM-MES).
 
