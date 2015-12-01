@@ -62,7 +62,7 @@
       *- ESTADISTICAS FILE DESCRIPTION -*
       *---------------------------------*
        FD ESTADISTICAS-FILE LABEL RECORD OMITTED.
-       01 REG-ESTADISTICAS                 PIC X(80).
+       01 REG-ESTADISTICAS                 PIC X(120).
 
        WORKING-STORAGE SECTION.
       *-----------------------
@@ -89,6 +89,7 @@
        01 WS-TIM-ANIO          PIC 9(4).
        01 WS-TIM-MES           PIC 9(2).
        01 WS-TIM-SUC           PIC X(03).
+       01 WS-SUC-FLAG          PIC 9(1).
 
        01 FECHA-ACTUAL.
            03  FECHA-ACTUAL-AAAA      PIC 9(4).
@@ -130,50 +131,50 @@
            03 ENC-FECHA-MM     PIC 9(2).
            03 FILLER           PIC X(1)    VALUE "/".
            03 ENC-FECHA-AAAA   PIC 9(4).
-           03 FILLER           PIC X(56)   VALUE SPACES.
+           03 FILLER           PIC X(80)   VALUE SPACES.
            03 FILLER           PIC X(4)    VALUE "Hoja".
            03 FILLER           PIC X(1)    VALUE SPACES.
            03 ENC-HOJA         PIC 9(3).
 
        01 ENCABEZADO2.
-           03 FILLER           PIC X(10)   VALUE SPACES.
+           03 FILLER           PIC X(22)   VALUE SPACES.
            03 ENC-TITULO       PIC X(56)   VALUE
-           "Listado de Estadistico de Horas aplicadas por anio y mes".
+           "Listado Estadistico de Horas aplicadas por anio y mes".
            03 FILLER           PIC X(10)   VALUE SPACES.
 
-       01 ENCABEZADO3          PIC X(80)   VALUE ALL SPACES.
+       01 ENCABEZADO3          PIC X(105)   VALUE ALL SPACES.
 
        01 LINEA-DETALLES.
-           03 FILLER           PIC X(80)   VALUE ALL "-".
+           03 FILLER           PIC X(104)   VALUE ALL "-".
 
        01 ENCABEZAD-DETALLES.
            03 FILLER           PIC X(19)   VALUE "Sucursal".
            03 FILLER           PIC X(2)    VALUE SPACES.
            03 ENC-ANIO         PIC X(4)    VALUE SPACES.
            03 FILLER           PIC X(2)    VALUE SPACES.
-           03 ENC-ENE          PIC X(3)    VALUE "Ene".
+           03 ENC-ENE          PIC X(5)    VALUE "Ene".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-FEB          PIC X(3)    VALUE "Feb".
+           03 ENC-FEB          PIC X(5)    VALUE "Feb".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-MAR          PIC X(3)    VALUE "Mar".
+           03 ENC-MAR          PIC X(5)    VALUE "Mar".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-ABR          PIC X(3)    VALUE "Abr".
+           03 ENC-ABR          PIC X(5)    VALUE "Abr".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-MAY          PIC X(3)    VALUE "May".
+           03 ENC-MAY          PIC X(5)    VALUE "May".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-JUN          PIC X(3)    VALUE "Jun".
+           03 ENC-JUN          PIC X(5)    VALUE "Jun".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-JUL          PIC X(3)    VALUE "Jul".
+           03 ENC-JUL          PIC X(5)    VALUE "Jul".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-AGO          PIC X(3)    VALUE "Ago".
+           03 ENC-AGO          PIC X(5)    VALUE "Ago".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-SEP          PIC X(3)    VALUE "Sep".
+           03 ENC-SEP          PIC X(5)    VALUE "Sep".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-OCT          PIC X(3)    VALUE "Oct".
+           03 ENC-OCT          PIC X(5)    VALUE "Oct".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-NOV          PIC X(3)    VALUE "Nov".
+           03 ENC-NOV          PIC X(5)    VALUE "Nov".
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 ENC-DIC          PIC X(3)    VALUE "Dic".
+           03 ENC-DIC          PIC X(5)    VALUE "Dic".
            03 FILLER           PIC X(1)    VALUE SPACES.
            03 ENC-TOTAL        PIC X(5)    VALUE "Total".
 
@@ -182,31 +183,31 @@
            03 FILLER           PIC X(2)    VALUE SPACES.
            03 DET-ANIO         PIC 9(4).
            03 FILLER           PIC X(2)    VALUE SPACES.
-           03 DET-ENE          PIC 9(3).
+           03 DET-ENE          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-FEB          PIC 9(3).
+           03 DET-FEB          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-MAR          PIC 9(3).
+           03 DET-MAR          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-ABR          PIC 9(3).
+           03 DET-ABR          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-MAY          PIC 9(3).
+           03 DET-MAY          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-JUN          PIC 9(3).
+           03 DET-JUN          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-JUL          PIC 9(3).
+           03 DET-JUL          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-AGO          PIC 9(3).
+           03 DET-AGO          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-SEP          PIC 9(3).
+           03 DET-SEP          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-OCT          PIC 9(3).
+           03 DET-OCT          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-NOV          PIC 9(3).
+           03 DET-NOV          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-DIC          PIC 9(3).
+           03 DET-DIC          PIC 9(2),99.
            03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-TOTAL        PIC 9(4).
+           03 DET-TOTAL        PIC 9(3),9.
 
        PROCEDURE DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -264,15 +265,15 @@
 
        LEER-SUCURSALES.
            READ SUCURSALES-FILE.
-           IF FS-SUCURSALES IS NOT EQUAL TO 00 AND 10
+           IF FS-SUCURSALES IS NOT EQUAL TO 00 AND CON-EOF
                DISPLAY "ERROR AL LEER SUCURSALES FS: " FS-SUCURSALES
            END-IF.
 
        CARGAR-SUCURSALES.
            PERFORM GUARDAR-SUCURSAL
                   VARYING INDICE FROM 1 BY 1
-                  UNTIL INDICE > CON-CANT-SUC
-                  OR FS-SUCURSALES IS EQUAL TO 10.
+                  UNTIL (INDICE > CON-CANT-SUC)
+                  OR (FS-SUCURSALES = CON-EOF).
 
        GUARDAR-SUCURSAL.
            MOVE SUC-SUCURSAL TO VEC-SUCURSALES-SUCURSAL(INDICE).
@@ -291,9 +292,11 @@
        IMPRIMIR-ENCABEZADO-1.
            MOVE WS-HOJA TO ENC-HOJA.
 
+           *> Mostrar encabezado general
            DISPLAY LINEA-DETALLES.
            DISPLAY ENCABEZADO1.
 
+           *> Escribir encabezado en Estadisticas
            WRITE REG-ESTADISTICAS FROM LINEA-DETALLES.
            WRITE REG-ESTADISTICAS FROM ENCABEZADO1.
 
@@ -349,7 +352,7 @@
 
            PERFORM GUARDAR-MES-REGISTRO.
 
-           *> Si el registro coincide con anio y Sucursal
+           *> Si el registro coincide con Anio y Sucursal
            IF (VEC-ANIOS-ELEM(WS-IND-ANIO) = WS-TIM-ANIO)
                AND (VEC-SUCURSALES-SUCURSAL(WS-IND-SUC) = WS-TIM-SUC)
                PERFORM GUARDAR-VALORES
@@ -380,8 +383,7 @@
            SET INDICE2 TO 1.
            SEARCH VEC-ANIOS-ELEM
            AT END PERFORM ANIO-NO-ENCONTRADO
-           WHEN VEC-ANIOS-ELEM(INDICE2) IS EQUAL TO WS-TIM-ANIO
-
+           WHEN (VEC-ANIOS-ELEM(INDICE2) = WS-TIM-ANIO)
                DISPLAY "- Anio encontrado"
 
                MOVE INDICE2 TO WS-IND-ANIO
@@ -393,8 +395,7 @@
            SET INDICE TO 1.
            SEARCH VEC-SUCURSALES-ELM
            AT END PERFORM SUCURSAL-NO-ENCONTRADA
-           WHEN VEC-SUCURSALES-SUCURSAL(INDICE) IS EQUAL TO WS-TIM-SUC
-
+           WHEN (VEC-SUCURSALES-SUCURSAL(INDICE) = WS-TIM-SUC)
                DISPLAY "- Sucursal encontrada"
 
                MOVE INDICE TO WS-IND-SUC
@@ -404,15 +405,18 @@
            DISPLAY "[ Guardar valores en la matriz ]".
 
            ADD TIM-HORAS
-           TO MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-SUC, WS-TIM-MES).
+           TO MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-ANIO, WS-TIM-MES).
 
            DISPLAY "- Dato Guardado "
-           MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-SUC, WS-TIM-MES).
+           MAT-DATOS-HORAS(WS-IND-SUC, WS-IND-ANIO, WS-TIM-MES).
 
            ADD TIM-HORAS TO VEC-TOT-MENSUAL-ELM(WS-TIM-MES).
 
            ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES)
            TO MAT-TOT-SUC-HORAS(WS-IND-SUC, WS-IND-ANIO).
+
+           DISPLAY "- Total anual Sucursal Guardado: "
+                   MAT-TOT-SUC-HORAS(WS-IND-SUC, WS-IND-ANIO).
 
            ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES) TO WS-TOT-GRAL.
 
@@ -432,17 +436,32 @@
            PERFORM IMPRIMIR-FILAS-SUCURSAL UNTIL (WS-I2 > CON-CANT-SUC).
 
        IMPRIMIR-FILAS-SUCURSAL.
-           *> Mostrar nombre Sucursal en tabla
-           MOVE VEC-SUCURSALES-RAZON(WS-I2) TO DET-SUCURSAL.
+           *> Flag para nombre de Sucursal
+           MOVE 1 TO WS-SUC-FLAG.
 
            *> Recorrer por Anio
            MOVE 1 TO WS-J2.
            PERFORM IMRPIMIR-COLUMNAS-SUCURSAL
                   UNTIL (WS-J2 > CON-CANT-ANIOS).
 
+           *> Imprimir linea en blanco
+           DISPLAY ENCABEZADO3.
+           WRITE REG-ESTADISTICAS FROM ENCABEZADO3.
+
            ADD 1 TO WS-I2.
 
        IMRPIMIR-COLUMNAS-SUCURSAL.
+           *> Mostrar nombre Sucursal en tabla
+           IF WS-SUC-FLAG = 1
+               MOVE VEC-SUCURSALES-RAZON(WS-I2) TO DET-SUCURSAL
+
+               *> Reset flag de Sucursal
+               MOVE 0 TO WS-SUC-FLAG
+           ELSE
+               *> No repetir sucursal
+               MOVE SPACES TO DET-SUCURSAL
+           END-IF.
+
            *> Mostrar anio en fila
            MOVE VEC-ANIOS-ELEM(WS-J2) TO DET-ANIO.
 
