@@ -183,31 +183,31 @@
            03 FILLER           PIC X(2)    VALUE SPACES.
            03 DET-ANIO         PIC 9(4).
            03 FILLER           PIC X(2)    VALUE SPACES.
-           03 DET-ENE          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-FEB          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-MAR          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-ABR          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-MAY          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-JUN          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-JUL          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-AGO          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-SEP          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-OCT          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-NOV          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-DIC          PIC 9(2),99.
-           03 FILLER           PIC X(1)    VALUE SPACES.
-           03 DET-TOTAL        PIC 9(3),9.
+           03 DET-ENE          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-FEB          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-MAR          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-ABR          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-MAY          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-JUN          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-JUL          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-AGO          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-SEP          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-OCT          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-NOV          PIC 9(3).
+           03 FILLER           PIC X(3)    VALUE SPACES.
+           03 DET-DIC          PIC 9(3).
+           03 FILLER           PIC X(4)    VALUE SPACES.
+           03 DET-TOTAL        PIC 9(4).
 
        PROCEDURE DIVISION.
       *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
