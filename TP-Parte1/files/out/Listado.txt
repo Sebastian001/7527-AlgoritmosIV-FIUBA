@@ -1,4 +1,4 @@
-Fecha 28/11/2015                                             Hoja 001
+Fecha 03/12/2015                                             Hoja 001
                 Listado de horas aplicadas
 
 PROFESOR INEXISTENTE
@@ -6,16 +6,34 @@ ABC12
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-02/00/0000   001      AEROBOX              99999,00   15,00        1499985,00
+02/01/2011   001      AEROBOX                  1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                     15,00        1499985,00
+Totales por fecha                                     10,00             10,00
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-03/00/0000   001      PILATES                200,11   30,00           6003,30
+02/10/2011   001      AEROBOX                  1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                     30,00           6003,30
-Totales por Profesor                                  45,00        1505988,30
+Totales por fecha                                     10,00             10,00
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+02/11/2011   001      AEROBOX                  1,00   10,00             10,00
+                                                     ------       -----------
+Totales por fecha                                     10,00             10,00
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+03/01/2012   001      PILATES                  1,00   10,00             10,00
+                                                     ------       -----------
+Totales por fecha                                     10,00             10,00
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+04/01/2012   001      AEROBOX                  1,00   10,00             10,00
+                                                     ------       -----------
+Totales por fecha                                     10,00             10,00
+Totales por Profesor                                  50,00             50,00
 
 
 
@@ -48,22 +66,7 @@ Totales por Profesor                                  45,00        1505988,30
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Fecha 28/11/2015                                             Hoja 002
+Fecha 03/12/2015                                             Hoja 002
                 Listado de horas aplicadas
 
 PROFESOR INEXISTENTE
@@ -71,16 +74,16 @@ BBB02
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-04/00/0000   001      FIERROS                100,11   10,00           1001,10
+04/02/2012   001      FIERROS                  1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                     10,00           1001,10
+Totales por fecha                                     10,00             10,00
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-06/00/0000   001      STEPUP                 432,11   70,00          30247,70
+06/03/2015   001      STEPUP                   1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                     70,00          30247,70
-Totales por Profesor                                  80,00          31248,80
+Totales por fecha                                     10,00             10,00
+Totales por Profesor                                  20,00             20,00
 
 
 
@@ -128,7 +131,7 @@ Totales por Profesor                                  80,00          31248,80
 
 
 
-Fecha 28/11/2015                                             Hoja 003
+Fecha 03/12/2015                                             Hoja 003
                 Listado de horas aplicadas
 
 PROFESOR INEXISTENTE
@@ -136,16 +139,16 @@ DDD11
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-02/00/0000   002      AEROBOX              99999,00   10,11        1010989,89
+02/11/2011   002      AEROBOX                  1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                     10,11        1010989,89
+Totales por fecha                                     10,00             10,00
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-04/00/0000   002      PILATES                200,11   50,11          10027,51
+04/11/2011   002      PILATES                  1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                     50,11          10027,51
-Totales por Profesor                                  60,22        1021017,40
+Totales por fecha                                     10,00             10,00
+Totales por Profesor                                  20,00             20,00
 
 
 
@@ -193,7 +196,7 @@ Totales por Profesor                                  60,22        1021017,40
 
 
 
-Fecha 28/11/2015                                             Hoja 004
+Fecha 03/12/2015                                             Hoja 004
                 Listado de horas aplicadas
 
 PROFESOR INEXISTENTE
@@ -201,16 +204,16 @@ FFF11
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-05/00/0000   002      FIERROS                100,11   50,11           5016,51
+05/11/2011   002      FIERROS                  1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                     50,11           5016,51
+Totales por fecha                                     10,00             10,00
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-06/00/0000   002      STEPUP                 432,11   70,11          30295,23
+06/12/2011   002      STEPUP                   1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                     70,11          30295,23
-Totales por Profesor                                 120,22          35311,74
+Totales por fecha                                     10,00             10,00
+Totales por Profesor                                  20,00             20,00
 
 
 
@@ -258,7 +261,7 @@ Totales por Profesor                                 120,22          35311,74
 
 
 
-Fecha 28/11/2015                                             Hoja 005
+Fecha 03/12/2015                                             Hoja 005
                 Listado de horas aplicadas
 
 PROFESOR INEXISTENTE
@@ -266,11 +269,16 @@ HHH11
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-01/00/0000   003      AEROBOX              99999,00    5,11         510994,89
-             003      FIERROS                100,11    1,11            111,12
+01/01/2012   003      AEROBOX                  1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                      6,22         511106,01
-Totales por Profesor                                   6,22         511106,01
+Totales por fecha                                     10,00             10,00
+
+   Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
+________________________________________________________________________________
+01/02/2012   003      FIERROS                  1,00   10,00             10,00
+                                                     ------       -----------
+Totales por fecha                                     10,00             10,00
+Totales por Profesor                                  20,00             20,00
 
 
 
@@ -318,28 +326,23 @@ Totales por Profesor                                   6,22         511106,01
 
 
 
-
-
-
-
-
-Fecha 28/11/2015                                             Hoja 006
+Fecha 03/12/2015                                             Hoja 006
                 Listado de horas aplicadas
 
 Profesor: JJJ33     Nombre: SANTIAGO LOPEZ
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-02/00/0000   003      STEPUP                 432,11    2,11            911,75
+02/01/2014   003      STEPUP                   1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                      2,11            911,75
+Totales por fecha                                     10,00             10,00
 
    Fecha   Sucursal  Tipo de clase            Tarifa  Horas          Importe
 ________________________________________________________________________________
-03/00/0000   003      CINTA                  322,11    3,11           1001,76
+03/01/2014   003      CINTA                    1,00   10,00             10,00
                                                      ------       -----------
-Totales por fecha                                      3,11           1001,76
-Totales por Profesor                                   5,22           1913,51
+Totales por fecha                                     10,00             10,00
+Totales por Profesor                                  20,00             20,00
 
 
 
@@ -386,10 +389,10 @@ Totales por Profesor                                   5,22           1913,51
 
 
 
-Fecha 28/11/2015                                             Hoja 007
+Fecha 03/12/2015                                             Hoja 007
                 Listado de horas aplicadas
 
-Total general                                                      3106585,76
+Total general                                                          150,00
 
 
 

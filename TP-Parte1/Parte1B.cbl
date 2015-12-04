@@ -412,13 +412,13 @@
 
            ADD TIM-HORAS TO VEC-TOT-MENSUAL-ELM(WS-TIM-MES).
 
-           ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES)
+           ADD TIM-HORAS
            TO MAT-TOT-SUC-HORAS(WS-IND-SUC, WS-IND-ANIO).
 
            DISPLAY "- Total anual Sucursal Guardado: "
                    MAT-TOT-SUC-HORAS(WS-IND-SUC, WS-IND-ANIO).
 
-           ADD VEC-TOT-MENSUAL-ELM(WS-TIM-MES) TO WS-TOT-GRAL.
+           ADD TIM-HORAS TO WS-TOT-GRAL.
 
        SUCURSAL-NO-ENCONTRADA.
            DISPLAY "- Sucursal no enconetrada".
