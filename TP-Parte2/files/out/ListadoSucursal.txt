@@ -1,0 +1,183 @@
+Fecha 09/12/2015                                                  Hoja 001
+                    Horas Aplicadas por Sucursal
+
+Sucursal: Sucursal del Este
+Cuit: 00000000003
+
+   Fecha         Profesor        Nombre                Horas        Importe
+________________________________________________________________________________
+03/01/2012        ABC12     JUAN ALBERTO RODRIGUEZ     10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      10,00             10,00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 09/12/2015                                                  Hoja 002
+                    Horas Aplicadas por Sucursal
+
+Sucursal: Sucursal del Oeste
+Cuit: 00000000004
+
+   Fecha         Profesor        Nombre                Horas        Importe
+________________________________________________________________________________
+04/01/2012        ABC12     JUAN ALBERTO RODRIGUEZ     10,00             10,00
+                  BBB02     ROBERTO GONZALEZ           10,00             10,00
+                  BBB02     ROBERTO GONZALEZ           10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      30,00             30,00
+02/11/2011        DDD11     JAVIER ALVAREZ             10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      10,00             10,00
+04/11/2011        DDD11     JAVIER ALVAREZ             10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      10,00             10,00
+05/11/2011        FFF11     MATIAS PANCLASIO           10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      10,00             10,00
+06/12/2011        FFF11     MATIAS PANCLASIO           10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      10,00             10,00
+01/01/2012        HHH11     CARLOS DE CRISTOFARO       10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      10,00             10,00
+01/02/2012        HHH11     CARLOS DE CRISTOFARO       10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      10,00             10,00
+02/01/2014        JJJ33     SANTIAGO LOPEZ             10,00             10,00
+                                                      ------       -----------
+Totales por fecha                                      10,00             10,00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fecha 09/12/2015                                                  Hoja 003
+                    Horas Aplicadas por Sucursal
+
+Total general                                                          110,00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
