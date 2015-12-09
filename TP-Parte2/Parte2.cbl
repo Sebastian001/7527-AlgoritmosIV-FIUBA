@@ -96,16 +96,17 @@
            DATA RECORD IS REG-ORD.
        01  REG-ORD.
            03 ORD-CLAVE.
-               05 REG-ORD-RAZON             PIC X(25).
-               05 REG-ORD-CUIT              PIC 9(11).
-               05 REG-ORD-FECHA.
-                   07  ORD-FECHA-AAAA       PIC 9999.
-                   07  ORD-FECHA-MM         PIC 99.
-                   07  ORD-FECHA-DD         PIC 99.
-               05  REG-ORD-PROF-NUMERO      PIC X(05).
-           03  REG-ORD-PROF-NOMBRE          PIC X(25).
-           03  REG-ORD-HORAS                PIC 9(02)V99.
-           03  REG-ORD-IMPORTE              PIC 9(07)V99.
+              05 REG-ORD-RAZON          PIC X(25).
+              05 REG-ORD-CUIT           PIC 9(11).
+              05 REG-ORD-FECHA.
+                 07  ORD-FECHA-AAAA     PIC 9999.
+                 07  ORD-FECHA-MM       PIC 99.
+                 07  ORD-FECHA-DD       PIC 99.
+              05  REG-ORD-PROF-NUMERO   PIC X(05).
+           03  REG-ORD-PROF-NOMBRE      PIC X(25).
+           03  REG-ORD-HORAS            PIC 9(02)V99.
+           03  REG-ORD-IMPORTE          PIC 9(07)V99.
+
 
        WORKING-STORAGE SECTION.
 
@@ -234,6 +235,7 @@
        77 FECHA-ANT         PIC 9(8).
        77 TARIFA-VIG        PIC 9(5)V99.
        77 OP                PIC X.
+       77 ANT-CUIT          PIC 9(11).
 
        PROCEDURE DIVISION.
 
@@ -426,6 +428,7 @@
            CLOSE LISTADO.
 
        PRINT-ENCABEZADO.
+           WRITE REG-LISTADO FROM LINEA-EN-BLANCO.
            MOVE FUNCTION CURRENT-DATE TO FECHA-DE-HOY.
            MOVE CORRESPONDING FECHA-DE-HOY TO ENCABEZADO1.
            DISPLAY ENCABEZADO1.
@@ -434,7 +437,7 @@
            WRITE REG-LISTADO FROM ENCABEZADO1.
            WRITE REG-LISTADO FROM ENCABEZADO2.
            WRITE REG-LISTADO FROM LINEA-EN-BLANCO.
-           ADD 3 TO LINEA.
+           ADD 4 TO LINEA.
 
        PRINT-SALTO-DE-PAGINA.
            SUBTRACT LINEA FROM 60 GIVING RESTO-LINEAS.
@@ -470,13 +473,17 @@
            DISPLAY "Imprimir datos sucursal".
            DISPLAY REG-ORD-RAZON.
            DISPLAY SUC-RAZON.
-           DISPLAY REG-ORD-CUIT.
            MOVE REG-ORD-RAZON TO E3-SUCURSAL.
-           MOVE REG-ORD-CUIT TO E4-CUIT.
            WRITE REG-LISTADO FROM ENCABEZADO3-SUCURSAL.
+           ADD 1 TO LINEA.
+
+       PRINT-CUIT.
+           DISPLAY "Imprimir CUIT:".
+           DISPLAY REG-ORD-CUIT.
+           MOVE REG-ORD-CUIT TO E4-CUIT.
            WRITE REG-LISTADO FROM ENCABEZADO4-CUIT.
            WRITE REG-LISTADO FROM LINEA-EN-BLANCO.
-           ADD 3 TO LINEA.
+           ADD 2 TO LINEA.
 
        PRINT-ENCABEZADO-TABLA.
            DISPLAY "Fecha   Profesor   Nombre  Horas   Importe".
@@ -485,13 +492,26 @@
            ADD 2 TO LINEA.
 
        PROCESO2.
+           MOVE REG-ORD-CUIT TO ANT-CUIT.
+           PERFORM PRINT-CUIT.
+           PERFORM PROCESO3 UNTIL SS-ORDEN = 10
+               OR ANT-RAZON <> REG-ORD-RAZON
+               OR ANT-CUIT <> REG-ORD-CUIT.
+           PERFORM CHECK-NUEVA-PAGINA.
+
+       PROCESO3.
            MOVE 0 TO TOT-FECHA-HORAS.
            MOVE 0 TO TOT-FECHA-IMP.
+      *     PERFORM PRINT-CUIT.
            PERFORM PRINT-ENCABEZADO-TABLA.
            MOVE REG-ORD-FECHA TO ANT-FECHA.
            MOVE HIGH-VALUE TO FECHA-ANT.
-           PERFORM PROCESO3 UNTIL SS-ORDEN = 10
+      *     PERFORM PROCESO3 UNTIL SS-ORDEN = 10
+      *         OR ANT-RAZON <> REG-ORD-RAZON
+      *         OR ANT-FECHA <> REG-ORD-FECHA.
+           PERFORM PROCESO4 UNTIL SS-ORDEN = 10
                OR ANT-RAZON <> REG-ORD-RAZON
+               OR ANT-CUIT <> REG-ORD-CUIT
                OR ANT-FECHA <> REG-ORD-FECHA.
 
            PERFORM PRINT-LINEA-SUBTOTAL.
@@ -519,7 +539,7 @@
            END-IF.
 
 
-       PROCESO3.
+       PROCESO4.
            PERFORM PRINT-DATOS-FECHA.
 
            ADD REG-ORD-IMPORTE TO TOT-GRAL.
