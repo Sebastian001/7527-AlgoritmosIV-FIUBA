@@ -1,5 +1,5 @@
       ******************************************************************
-      * Author: Sebastián Torres y Adrián Mouly
+      * Author: Sebastian Torres y Adrian Mouly
       *
       ******************************************************************
        IDENTIFICATION DIVISION.
